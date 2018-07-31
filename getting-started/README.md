@@ -6,6 +6,7 @@ This "Getting Started" tutorial will introduce you to Kiwi, the miniature vehicl
 * [Hardware Overview](#hardware-overview)
 * [Connect to Kiwi](#connect-to-kiwi)
 * [Interacting with Kiwi using Microservices](#interacting-with-kiwi-using-microservices)
+* [Developing for Kiwi using a Webbrowser](#developing-for-kiwi-using-a-webbrowser)
 
 ---
 
@@ -108,4 +109,14 @@ docker-compose -f bbb-control.yml up
 * Step 3: Connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.7.1:8081](http://192.168.7.1:8081)
 
 You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Now, click on the gamepad symbol bottom/left to open a webpage to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo.
+
+---
+
+### Developing for Kiwi using a Webbrowser
+
+The last part of this "Getting Started" tutorial will demonstrate how to develop a software for Kiwi using a webbrowser.
+
+(![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Add relevant parts from VOR here)
+
+_Where to go from here?_ Now, you are able to use the camera from your Kiwi, visualize, record, and replay the data, and to send steering, acceleration, and deceleration commands. You also prototyped an algorithm in your webbrowser using Javascript. Next, you can investigate our template module that is running in C++ to process video data and to interface with the car. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv).
 
