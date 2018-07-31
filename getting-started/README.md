@@ -2,12 +2,14 @@
 
 This "Getting Started" tutorial will introduce you to Kiwi, the miniature vehicle platform from Chalmers Revere. Its hardware and software are entirely open source and you are invited to use, change, and contribute.
 
+---
 
 ## Table of Contents
 * [Hardware Overview](#hardware-overview)
 * [Connect to Kiwi](#connect-to-kiwi)
 * [Interacting with Kiwi using Microservices](#interacting-with-kiwi-using-microservices)
 
+---
 
 ### Hardware Overview
 
@@ -29,6 +31,7 @@ The following pictures provide an overview of the installed components on Kiwi.
 
 All the sensors except for the camera are connected to a small PCB board and then to the BeagleBone Blue board. The camera is directly connected to the Raspberry Pi board. The two boards are connected by a USB cable, which is treated by both boards as a standard network connection. Both boards are also wireless-ready: in particular, the Raspberry Pi has WiFi capabilities, while the BeagleBone Blue has both WiFi and Bluetooth connectivity.
 
+---
 
 ### Connect to Kiwi
 
@@ -39,6 +42,7 @@ Kiwi comes with Wifi enabled by default and is configured to share an Internet c
 
 Kiwi's Raspberry Pi is running [Rasbian Stretch](https://www.raspberrypi.org/downloads/raspbian/) and BeagleBone Blue is running [Debian 9.2](https://debian.beagleboard.org/images/bone-debian-9.2-iot-armhf-2017-10-10-4gb.img.xz)(![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Check).
 
+---
 
 ### Interacting with Kiwi using Microservices
 
