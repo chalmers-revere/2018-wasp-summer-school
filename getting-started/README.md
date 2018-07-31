@@ -76,7 +76,7 @@ wget https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/m
 docker-compose -f rpi-camera-x264-viewer.yml up
 ```
 
-* Step 3: Connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081:[http://192.168.7.1:8081](http://192.168.7.1:8081)
+* Step 3: Connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.7.1:8081](http://192.168.7.1:8081)
 
 Now, you should see a live stream from your Kiwi's camera visualized in your webbrowser.
 
@@ -105,7 +105,7 @@ wget https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/m
 docker-compose -f bbb-control.yml up
 ```
 
-* Step 3: Connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081:[http://192.168.7.1:8081](http://192.168.7.1:8081)
+* Step 3: Connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.7.1:8081](http://192.168.7.1:8081)
 
 You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Now, click on the gamepad symbol bottom/left to open a webpage to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo.
 
