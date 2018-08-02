@@ -2,6 +2,8 @@
 
 This guide will provide you the steps to install Debian on the beaglebone blue and raspberry pi 3 computers on the kiwi platform. They are pre-installed on the platform already, so use this guide as a last resort for resetting the platform or installation reference.
 
+In this guide, we will assume that you have internet connection on your host pc and have curl package installed in the fresh debian os.
+
 
 ## Table of Contents
 * [Beaglebone blue](#beaglebone-blue)
