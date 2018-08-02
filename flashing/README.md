@@ -2,7 +2,6 @@
 
 This guide will provide you the steps to install Debian on the beaglebone blue and raspberry pi 3 computers on the kiwi platform. They are pre-installed on the platform already, so use this guide as a last resort for resetting the platform or installation reference.
 
-This "Getting Started" tutorial will introduce you to Kiwi, the miniature vehicle platform from Chalmers Revere. Its hardware and software are entirely open source and you are invited to use, change, and contribute.
 
 ## Table of Contents
 * [Beaglebone blue](#beaglebone-blue)
