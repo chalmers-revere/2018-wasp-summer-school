@@ -118,5 +118,10 @@ The last part of this "Getting Started" tutorial will demonstrate how to develop
 
 (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Add relevant parts from VOR here)
 
-_Where to go from here?_ Now, you are able to use the camera from your Kiwi, visualize, record, and replay the data, and to send steering, acceleration, and deceleration commands. You also prototyped an algorithm in your webbrowser using Javascript. Next, you can investigate our template module that is running in C++ to process video data and to interface with the car. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv).
+_Where to go from here?_
 
+Now, you are able to use the camera from your Kiwi, visualize, record, and replay the data, and to send steering, acceleration, and deceleration commands. You also prototyped an algorithm in your webbrowser using Javascript.
+
+Next, you can investigate our template module that is running in C++ to process video data and to interface with the car. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv).
+
+Alternatively, you can investigate our template module that is running in Python to process video data. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv-python).
