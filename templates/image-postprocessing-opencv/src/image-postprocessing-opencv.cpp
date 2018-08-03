@@ -39,7 +39,7 @@ int32_t main(int32_t argc, char **argv) {
         std::cerr << "         --name:    name of the shared memory area to attach" << std::endl;
         std::cerr << "         --width:   width of the frame" << std::endl;
         std::cerr << "         --height:  height of the frame" << std::endl;
-        std::cerr << "Example: " << argv[0] << " --cid=111 --name=video0.argb --width=640 --height=480 --verbose" << std::endl;
+        std::cerr << "Example: " << argv[0] << " --cid=112 --name=video0.argb --width=640 --height=480 --verbose" << std::endl;
     }
     else {
         const std::string NAME{commandlineArguments["name"]};

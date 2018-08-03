@@ -82,5 +82,5 @@ Alternatively, you can also modify a `.yml` file from the Getting Started tutori
         ipc: "host"
         volumes:
         - /tmp:/tmp
-        command: "--cid=111 --name=img.argb --width=640 --height=480"
+        command: "--cid=112 --name=img.argb --width=640 --height=480"
 ```
