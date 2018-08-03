@@ -42,7 +42,7 @@ services:
 
     opendlv-vehicle-view-armhf:
         container_name: opendlv-vehicle-view
-        image: chrberger/opendlv-vehicle-view-armhf:20180731
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.22
         restart: on-failure
         network_mode: "host"
         volumes:
