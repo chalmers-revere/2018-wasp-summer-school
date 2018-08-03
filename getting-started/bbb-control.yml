@@ -25,7 +25,7 @@ services:
         - /sys/:/sys/
         - /lib/firmware/:/lib/firmware/
         command: "/usr/bin/opendlv-device-kiwi-prugw \
-                --cid=111 \
+                --cid=112 \
                 --names=steering,propulsion \
                 --types=servo,esc \
                 --channels=1,2 \

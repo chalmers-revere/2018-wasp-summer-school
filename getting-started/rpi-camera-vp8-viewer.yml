@@ -18,9 +18,10 @@ version: '2'
 services:
     opendlv-device-camera-rpi:
         container_name: rpi-camera
-        image: chalmersrevere/opendlv-device-camera-rpi-armhf:v0.0.3
+        image: chalmersrevere/opendlv-device-camera-rpi-armhf:v0.0.4
         restart: on-failure
         ipc: "host"
+        privileged: true
         volumes:
         - /tmp:/tmp
         command: "--name.i420=img.i420 --name.argb=img.argb --width=640 --height=480 --freq=20"
@@ -36,7 +37,7 @@ services:
         ipc: "host"
         volumes:
         - /tmp:/tmp
-        command: "--cid=111 --name=img.i420 --width=640 --height=480 --vp8"
+        command: "--cid=112 --name=img.i420 --width=640 --height=480 --vp8"
 
 
     opendlv-vehicle-view-armhf:
@@ -48,7 +49,7 @@ services:
         - ~/recordings:/opt/vehicle-view/recordings
         - /var/run/docker.sock:/var/run/docker.sock
         environment:
-        - OD4SESSION_CID=111
+        - OD4SESSION_CID=112
         ports:
         - "8081:8081"
 

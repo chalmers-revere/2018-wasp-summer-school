@@ -24,9 +24,10 @@ services:
         restart: on-failure
         network_mode: "host"
         ipc: "host"
+        privileged: true
         volumes:
         - /tmp:/tmp
-        command: "--cid=111 --name.argb=img.argb --width=640 --height=480 --freq=20"
+        command: "--cid=112 --name.argb=img.argb --width=640 --height=480 --freq=20"
 
 
     opendlv-vehicle-view-armhf:
@@ -38,7 +39,7 @@ services:
         - ~/recordings:/opt/vehicle-view/recordings
         - /var/run/docker.sock:/var/run/docker.sock
         environment:
-        - OD4SESSION_CID=111
+        - OD4SESSION_CID=112
         ports:
         - "8081:8081"
 
