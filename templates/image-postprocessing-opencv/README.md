@@ -69,7 +69,7 @@ cat myapp.armhf.tar | docker load
 
 * Step 5: Finally, you can run your software component next to other microservices on Kiwi's *Raspberry Pi*:
 ```bash
-docker run --rm -ti --init --net=host --ipc=host -v /tmp:/tmp myapp.armhf --cid=111 --name=img.argb --width=640 --height=480
+docker run --rm -ti --init --net=host --ipc=host -v /tmp:/tmp myapp.armhf --cid=112 --name=img.argb --width=640 --height=480
 ```
 
 Alternatively, you can also modify a `.yml` file from the Getting Started tutorial to include your software component:
