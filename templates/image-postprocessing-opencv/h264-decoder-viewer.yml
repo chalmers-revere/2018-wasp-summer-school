@@ -33,7 +33,7 @@ services:
 
     opendlv-vehicle-view-amd64:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.22
+        image: chalmersrevere/opendlv-kiwi-view-multi:v0.0.2
         restart: on-failure
         network_mode: "host"
         volumes:

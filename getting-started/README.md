@@ -50,7 +50,7 @@ The first test is to run microservices that stream the camera feed to your webbr
 
 1. [opendlv-device-camera-rpi](https://github.com/chalmers-revere/opendlv-device-camera-rpi) - accessing Raspberry Pi's camera
 2. [opendlv-video-x264-encoder](https://github.com/chalmers-revere/opendlv-video-x264-encoder) - converting a camera frame into an h264 frame
-3. [opendlv-vehicle-view](https://github.com/chalmers-revere/opendlv-vehicle-view) - web application to visualize, record, and replay exchanged data
+3. [opendlv-kiwi-view](https://github.com/chalmers-revere/opendlv-kiwi-view) - web application to visualize, record, and replay data
 
 The first microservice is opening the camera and reading the images into two shared memory areas - one contains the frame in [I420](https://wiki.videolan.org/YUV/#I420) pixel format and the other contains the frame in ARGB pixel format. While the latter might be more convenient to be used with image detection algorithms, the former is used for h264 encoding.
 
@@ -58,25 +58,9 @@ The second microservice is attaching to the shared memory area that contains the
 
 The third microservice is providing a web-application to visualize, record, and replay any messages that are exchanged among the running microservices.
 
-To simplify the distribution of microservices and the description how to configure and run them, we are using Docker. 
+To simplify the distribution of microservices and the description how to configure and run them, we are using Docker. The listed microservices are pre-configured [here](https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/rpi-camera-x264-viewer-kiwi.yml) and run already on Kiwi (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Verify this).
 
-* Step 0: Prerequisites (already done on Kiwi)
-  * [You need to install Docker for your platform](https://docs.docker.com/install/linux/docker-ce/debian/#install-docker-ce)
-  * [You need to install `docker-compose`](https://docs.docker.com/compose/install/#install-compose)
-
-* Step 1: Log in to the *Raspberry Pi* and get the description file `rpi-camera-x264-viewer.yml` that contains the description how to configure and start the three aforementioend microservices:
-```bash
-wget https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/rpi-camera-x264-viewer.yml
-```
-
-* Step 2: After downloading the description file, you can start it:
-```bash
-docker-compose -f rpi-camera-x264-viewer.yml up
-```
-
-* Step 3: Connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.7.1:8081](http://192.168.7.1:8081)
-
-Now, you should see a live stream from your Kiwi's camera visualized in your webbrowser.
+Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.7.1:8081) (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Preferably: http://kiwi). As a result, you should see a live stream from your Kiwi's camera and the installed sensors visualized in your webbrowser.
 
 
 #### Tutorial 2: Controlling Kiwi using your webbrowser
@@ -87,33 +71,33 @@ The second test is start an additional microservice to control Kiwi with your we
 
 This microservice is listening for the messages [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo for acceleration/deceleration and steering.
 
-To simplify the distribution of this microservice and the description how to configure and run it, we are using Docker. 
+To simplify the distribution of this microservice and the description how to configure and run it, we are using Docker. The listed microservices are pre-configured and run already on Kiwi (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Verify this).
 
-* Step 0: Prerequisites (already done on Kiwi)
-  * [You need to install Docker for your platform](https://docs.docker.com/install/linux/docker-ce/debian/#install-docker-ce)
-  * [You need to install `docker-compose`](https://docs.docker.com/compose/install/#install-compose)
-
-* Step 1: Log in to the *BeagleBone Blue* and get the description file `bbb-control.yml` that contains the description how to configure and start the aforementioend microservice:
-```bash
-wget https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/bbb-control.yml
-```
-
-* Step 2: After downloading the description file, you can start it:
-```bash
-docker-compose -f bbb-control.yml up
-```
-
-* Step 3: Connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.7.1:8081](http://192.168.7.1:8081)
-
-You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Now, click on the gamepad symbol bottom/left to open a webpage to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo.
+Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.7.1:8081) (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Preferably: http://kiwi). You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Next, enable the button right to `Joystick` to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo. Now, you can click and drag with your mouse (or pan on a smartphone/tablet) to accelerate/decelerate and steer Kiwi.
 
 ---
 
 ### Developing for Kiwi using a Webbrowser
 
-The last part of this "Getting Started" tutorial will demonstrate how to develop a software for Kiwi using a webbrowser.
+The last part of this "Getting Started" tutorial will demonstrate how to develop a software for Kiwi using a webbrowser. In the web-application, you'll find a code editor at the bottom. Therein, you can use Javascript to conduct computations and to set values that will be sent to Kiwi. The distance sensor readings are set in the beginning of the code as follows:
 
-(![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Add relevant parts from VOR here)
+```javascript
+const frontSensor = perception.front;
+const rearSensor = perception.rear;
+const leftSensor = perception.left;
+const rightSensor = perception.right;
+```
+
+You can access them using the constants `frontSensor` and so forth.
+
+To send steering or acceleration/deceleration to Kiwi, you need to set two specific variables:
+```javascript
+actuation.motor = 0; // Range -1.0 for full stop to 0.25 for moving forward.
+actuation.steering = 0; // Range 38.0/180.0 * PI (left) .. -38.0/180.0 * PI (right).
+```
+
+These values will be sent to Kiwi after you enable the code button in the top right part of the page.
+
 
 _Where to go from here?_
 
