@@ -7,9 +7,15 @@ Prerequisites:
 * [You need to install `docker-compose`](https://docs.docker.com/compose/install/#install-compose)
 * You have successfully completed the "Getting Started" tutorials [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/getting-started).
 * You have a recording file (`.rec`) with some video frames.
-* You need to install Python and OpenCV (example below is for Ubuntu 18.04 LTS):
+* You need to install libcluon (example below is for Ubuntu 18.04 LTS):
 ```Bash
-sudo apt-get install --no-install-recommends python-opencv
+sudo add-apt-repository ppa:chrberger/libcluon
+sudo apt-get update
+sudo apt-get install libcluon
+```
+* You need to install Python, make, and OpenCV (example below is for Ubuntu 18.04 LTS):
+```Bash
+sudo apt-get install --no-install-recommends python-opencv make
 ```
 
 
@@ -27,13 +33,18 @@ docker-compose -f h264-decoder-viewer.yml up
 xhost +
 ```
 
+* Step 3: Next, you generate the data structures:
+```bash
+make
+```
+
 Next, start a webbrowser and connect to your local webapp: [http://localhost:8081](http://localhost:8081) and open the folder view. Select one of the `.rec` files for replay.
 
-* Step 3: Run the Pyton module from the folder `image-postprocessing-opencv-python`:
+* Step 4: Run the Pyton module from the folder `image-postprocessing-opencv-python`:
 ```bash
 sudo python displayImageFromSharedMemory.py
 ```
 
 The application should start and wait for images to come in. Your software component should open a new window and display the frame.
 
-You can stop your software component by pressing `Ctrl-C`. When you are modifying the software component, repeat step 3 after any change to your software.
+You can stop your software component by pressing `Ctrl-C`. When you are modifying the Python software component, repeat step 4 after any change to your software.
