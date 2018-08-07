@@ -8,6 +8,8 @@ In this guide, we will assume that you have internet connection on your host pc 
 ## Table of Contents
 * [Beaglebone blue](#beaglebone-blue)
 * [Raspberry pi 3](#raspberry-pi-3)
+* [Devantech flashing](#devantech-flashing)
+* [Steering calibration](#steering-calibration)
 
 ---
 
@@ -71,4 +73,43 @@ replace 10.42.0.33 with the found ip adress from previous step.
 
 * Script: `curl -sSL https://raw.githubusercontent.com/bjornborg/bbb/master/rpi3/install.sh | sh`
 
+The installation will prompt you some options for some packages.
+
+* For iptables-persistent: ipv4 yes and ipv6 yes
+
 9. Once the script is done, it will prompt you to press enter to reboot and you are done.
+
+### Devantech flashing
+1. After flashing the beaglebone with our installation script, there is a devantech folder at /root/bbb/devatech inside of the beaglebone (ssh into it).
+
+* root: `su`
+  * Password: root
+* change directory: `cd /root/bbb/devantech
+
+2. Build the binary
+
+* `make`
+
+3. Unplug the front sensor and run following command
+
+* `./devantech_change_addr 1 0x70 0x71`
+
+to change the back sensor on the i2c-1 bus from addr 0x70 to 0x71. When the command it executed, the led flash on the sensor should be lit up upon success. Unplug and plug the sensor again, when booting up, you should see the sensor flashing the led twice.
+
+### Steering calibration
+
+1. After the installation of our software, the steering might be slightly off centered causing kiwi to drift either left or right. This can be fixed by adding a small offset value to the steering as a part of the calibration. Get root privileges inside of the beaglebone (ssh into it)
+
+`su`
+Password: root
+
+2. Goto bbb folder
+`cd /root/bbb`
+
+3. In there, you will find a .env file containing all configuration settings for the kiwi platform regarding the motors. The particular setting of our interest is the offset first value. Change the value from 0.0 to 0.01 for example. Positive value on offset will steer it to left.
+
+4. Once changing the value reload the microservices
+`docker-compose -f bbb.yml down`
+`docker-compose -f bbb.yml up -d`
+
+Redo step 3 and 4 if it still needs to reconfiguered.
