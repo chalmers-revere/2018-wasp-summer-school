@@ -39,7 +39,7 @@ The installation will prompt you some options for some packages.
 * For librobotcontrol: Use rc_blink
 * For iptables-persistent: ipv4 yes and ipv6 yes
 
-7. When it is done, it will prompt you a message to press enter to shutdown and then you are done!
+7. When the script is done, reboot and you are done!
 
 ### Raspberry pi 3
 
@@ -80,7 +80,7 @@ The installation will prompt you some options for some packages.
 
 * For iptables-persistent: ipv4 yes and ipv6 yes
 
-10. Once the script is done, it will prompt you to press enter to reboot and you are done.
+10. Once the script is done, reboot and you are done.
 
 ### Devantech flashing
 1. After flashing the beaglebone with our installation script, there is a devantech folder at /root/bbb/devatech inside of the beaglebone (ssh into it). Navigate to it as root(do the following).
