@@ -99,7 +99,7 @@ The installation will prompt you some options for some packages.
 
 4. Bring the service down with the following command
 
-* `docker-compose - bbb.yml down' (NOTE: Wait until you see an output for the services with the message "done")`
+* `docker-compose -f bbb.yml down' (NOTE: Wait until you see an output for the services with the message "done")`
 
 5. Navigate to the directory where you runned make
 
