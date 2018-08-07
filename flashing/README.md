@@ -80,7 +80,7 @@ The installation will prompt you some options for some packages.
 9. Once the script is done, it will prompt you to press enter to reboot and you are done.
 
 ### Devantech flashing
-1. After flashing the beaglebone with our installation script, there is a devantech folder at /root/bbb/devatech inside of the beaglebone (ssh into it).
+1. After flashing the beaglebone with our installation script, there is a devantech folder at /root/bbb/devatech inside of the beaglebone (ssh into it). Navigate to it as root(do the following).
 
 * root: `su`
   * Password: root
@@ -90,11 +90,29 @@ The installation will prompt you some options for some packages.
 
 * `make`
 
-3. Unplug the front sensor and run following command
+3. Navigate to the directory /root/bbb, which is the one outside.
+
+* `cd .. (Takes you to the directory outside /bbb)`
+
+4. Bring the service down with the following command
+
+* `docker-compose - bbb.yml down' (NOTE: Wait until you see an output for the services with the message "done")`
+
+5. Navigate to the directory where you runned make
+
+* `cd devantech`
+
+6. Unplug the front sensor and run following command
 
 * `./devantech_change_addr 1 0x70 0x71`
 
-to change the back sensor on the i2c-1 bus from addr 0x70 to 0x71. When the command it executed, the led flash on the sensor should be lit up upon success. Unplug and plug the sensor again, when booting up, you should see the sensor flashing the led twice.
+to change the back sensor on the i2c-1 bus from addr 0x70 to 0x71. When the command its executed, the led flash on the sensor should be lit up upon success. Unplug and plug the sensor again, when booting up, you should see the sensor flashing the led twice. Now plug in the front sensor again. You will also see that it flashes once
+
+7. Now you need to bring the service up again. So you need to navigate to the outside directory again
+
+* `cd .. (It would take you to the directory /bbb)`
+* `docker-compose -f bbb.yml up -d`
+
 
 ### Steering calibration
 
