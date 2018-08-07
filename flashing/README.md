@@ -124,7 +124,13 @@ Password: root
 2. Goto bbb folder
 `cd /root/bbb`
 
-3. In there, you will find a .env file containing all configuration settings for the kiwi platform regarding the motors. The particular setting of our interest is the offset first value. Change the value from 0.0 to 0.01 for example. Positive value on offset will steer it to left.
+3. In there, you will find a .env file containing all configuration settings for the kiwi platform regarding the motors. 
+
+* `cat .env`
+
+The particular setting of our interest is the OFFSETS first value. Change the value from 0.0 to 0.01 for example. Positive value on offset will steer it to left. Change the values using nano for example
+
+* `nano .env`
 
 4. Once changing the value reload the microservices
 `docker-compose -f bbb.yml down`
