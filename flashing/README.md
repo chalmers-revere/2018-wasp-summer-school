@@ -65,7 +65,8 @@ if your ip address 10.42.0.1
 
 * Connecting: `ssh pi@10.42.0.33`
   * Password: raspberry
-replace 10.42.0.33 with the found ip adress from previous step.
+  
+(replace 10.42.0.33 with the found ip adress from previous step.)
 
 8. Get root privileges
 
