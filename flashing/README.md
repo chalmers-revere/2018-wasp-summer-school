@@ -19,7 +19,7 @@ In this guide, we will assume that you have internet connection on your host pc 
 
 2. Use a program to flash sdcard with the newly downloaded debian image. I'd recommend etcher (https://etcher.io/). Use a spare sdcard if possible, this step will wipe it clean for the debian image.
 
-3. Put the sdcard into the beaglebone blue sdcard slot and reboot it. It will now flash the eMMC on the chip. You will see the LEDs flash in a orderly manner back and fourth. Once it's done, the LEDs should be turned off and static. Remove the sdcard and reboot.
+3. Put the sdcard into the beaglebone blue sdcard slot and reboot it. It will now flash the eMMC on the chip. You will see the LEDs flash in a orderly manner back and fourth. Once it's done, the LEDs should be turned off and static. Remove the sdcard and put an empty sdcard on. Then reboot (Press the RST button once(upper left corner) and then the POW button(next to it)).
 
 4. Connect to the beaglebone via usb and you will see two network interfaces active. One interface will have a static IP of 192.168.6.1 and the other broadcast a dhcp server IP at 192.168.7.2. I would highly recommend to start sharing your internet connection via the interface with static ip. Ssh into the beaglebone via 192.168.7.2 and get root privilege 
 
