@@ -51,25 +51,27 @@ I recommend using the lite version without any graphical interface for optimum p
 
 3. Before unmounting the sdcard after the flashing, create a file named ssh on the boot filesystem partition. This will enable ssh functionality at boot on default. Unmount and insert the sdcard to the raspberry pi 3. BEFORE BOOTING UP raspberry pi 3, make sure that the beaglebone blue is powered up first and connected to the rasperry pi 3 via the USB. This is to ensure the configuration is done properly.
 
-4. Connect to the raspberry pi 3 via ethernet (share your network/internet by acting as a dhcp server alternatively connect your pc and raspberry pi 3 to a router).
+4. To power up the Raspberry Pi, you need to plug in the battery and you start the ESC. This will start the Raspberry Pi(it does not have a power up button).
 
-5. Find the ip address of the raspberry pi 3. On linux system use nmap, e.g.
+5. Connect to the raspberry pi 3 via ethernet (share your network/internet by acting as a dhcp server alternatively connect your pc and raspberry pi 3 to a router).
+
+6. Find the ip address of the raspberry pi 3. On linux system use nmap, e.g.
 
 * Finding the ip: nmap 10.42.0.1/24
 
 if your ip address 10.42.0.1
 
-6. Connect the raspberry pi 3 via ssh
+7. Connect the raspberry pi 3 via ssh
 
 * Connecting: `ssh pi@10.42.0.33`
   * Password: raspberry
 replace 10.42.0.33 with the found ip adress from previous step.
 
-7. Get root privileges
+8. Get root privileges
 
 `sudo -i`
 
-8. Use our installation script
+9. Use our installation script
 
 * Script: `curl -sSL https://raw.githubusercontent.com/bjornborg/bbb/master/rpi3/install.sh | sh`
 
@@ -77,7 +79,7 @@ The installation will prompt you some options for some packages.
 
 * For iptables-persistent: ipv4 yes and ipv6 yes
 
-9. Once the script is done, it will prompt you to press enter to reboot and you are done.
+10. Once the script is done, it will prompt you to press enter to reboot and you are done.
 
 ### Devantech flashing
 1. After flashing the beaglebone with our installation script, there is a devantech folder at /root/bbb/devatech inside of the beaglebone (ssh into it). Navigate to it as root(do the following).
