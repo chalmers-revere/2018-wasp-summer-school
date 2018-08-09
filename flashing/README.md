@@ -83,6 +83,10 @@ The installation will prompt you some options for some packages.
 
 10. Once the script is done, reboot and you are done.
 
+11. Now the port has changed so you need to ssh to the device with
+
+* `ssh -p 8880 pi@ipaddr
+
 ### Devantech flashing
 1. After flashing the beaglebone with our installation script, there is a devantech folder at /root/bbb/devatech inside of the beaglebone (ssh into it). Navigate to it as root(do the following).
 
