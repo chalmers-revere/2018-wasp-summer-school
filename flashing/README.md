@@ -21,14 +21,15 @@ In this guide, we will assume that you have internet connection on your host pc 
 
 3. Put the sdcard into the beaglebone blue sdcard slot and reboot it. It will now flash the eMMC on the chip. You will see the LEDs flash in a orderly manner back and fourth. Once it's done, the LEDs should be turned off and static. Remove the sdcard and put an empty sdcard on. Then reboot (Press the RST button once(upper left corner) and then the POW button(next to it)).
 
-4. Connect to the beaglebone via usb and you will see two network interfaces active. One interface will have a static IP of 192.168.6.1 and the other broadcast a dhcp server IP at 192.168.7.2. I would highly recommend to start sharing your internet connection via the interface with static ip. Ssh into the beaglebone via 192.168.7.2 and get root privilege 
+4. Connect the beaglebone to your host machine via usb or connect to its wifi hotspot (password: `BeagleBone`). Ssh into the board using the predefined target IP addresses `192.168.7.2` if you connected via usb or `192.168.8.1` if you connected to the board's wifi.
 
-* Connecting: `ssh debian@192.168.7.2`
+* Connecting: `ssh debian@192.168.7.2` or `ssh debian@192.168.8.1`
   * Password: temppwd
-* Get root privilege: `su`
-  * Password: root
 
-5. Once inside, share your internet connection and connect the beaglebone to it. If you shared it via the static interface can use `dhclient usb1`.
+5. Once inside, with `ifconfig` or `ip a` you will see two active usb network interfaces. One interface will have a static IP of 192.168.6.2 and the other at 192.168.7.2. I would recommend to start sharing your host internet connection: once done, get root privileges and connect the beaglebone to it: so if you shared it via the usb1 interface can run `dhclient usb1`.
+
+* Get root privileges: `su`
+  * Password: root
 
 6. Use the installation script: https://github.com/bjornborg/bbb/blob/master/bbb/install-post.sh
 
