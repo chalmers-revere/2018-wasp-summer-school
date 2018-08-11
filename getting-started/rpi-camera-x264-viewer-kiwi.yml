@@ -40,10 +40,10 @@ services:
         command: "--cid=112 --name=img.i420 --width=640 --height=480"
 
 
-    opendlv-vehicle-view-armhf:
+    opendlv-kiwi-view-webrtc-armhf:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-kiwi-view-multi:v0.0.2
-        restart: on-failure
+        image: chrberger/opendlv-kiwi-view-webrtc-multi:v0.0.1
+        restart: always
         network_mode: "host"
         volumes:
         - ~/recordings:/opt/vehicle-view/recordings
