@@ -42,7 +42,7 @@ Next, start a webbrowser and connect to your local webapp: [http://localhost:808
 
 * Step 4: Run the Pyton module from the folder `image-postprocessing-opencv-python`:
 ```bash
-sudo python displayImageFromSharedMemory.py
+python displayImageFromSharedMemory.py
 ```
 
 The application should start and wait for images to come in. Your software component should open a new window and display the frame.
