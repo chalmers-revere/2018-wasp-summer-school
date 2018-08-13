@@ -31,7 +31,7 @@ services:
         depends_on:
         - opendlv-device-camera-rpi
         container_name: x264-encoder
-        image: chalmersrevere/opendlv-video-x264-encoder-armhf:v0.0.1
+        image: chalmersrevere/opendlv-video-x264-encoder-armhf:v0.0.2
         restart: always
         network_mode: "host"
         ipc: "host"
