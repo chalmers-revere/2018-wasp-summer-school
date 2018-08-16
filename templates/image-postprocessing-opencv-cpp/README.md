@@ -58,12 +58,12 @@ docker save myapp.armhf > myapp.armhf.tar
 
 * Step 3: Next, you copy the image to Kiwi's *Raspberry Pi* using secure copy (`scp`):
 ```bash
-scp myapp.armhf.tar debian@192.168.7.1:~
+scp myapp.armhf.tar debian@192.168.8.1:~
 ```
 
 * Step 4: Afterwards, you log in to Kiwi's *Raspberry Pi* and load the Docker image:
 ```bash
-ssh debian@192.168.7.1
+ssh debian@192.168.8.1
 cat myapp.armhf.tar | docker load
 ```
 
