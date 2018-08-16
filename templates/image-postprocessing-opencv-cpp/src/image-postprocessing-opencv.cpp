@@ -69,6 +69,17 @@ int32_t main(int32_t argc, char **argv) {
 
             // Interface to a running OpenDaVINCI session; here, you can send and receive messages.
             cluon::OD4Session od4{static_cast<uint16_t>(std::stoi(commandlineArguments["cid"]))};
+
+            // Handler to receive distance readings.
+            auto onDistance = [](cluon::data::Envelope &&env){
+                // Now, we unpack the cluon::data::Envelope to get the desired DistanceReading.
+                opendlv::proxy::DistanceReading dr = cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(env));
+                std::cout << "Distance = " << dr.distance() << std::endl;
+            };
+            // Finally, we register our lambda for the message identifier for opendlv::proxy::DistanceReading.
+            od4.dataTrigger(opendlv::proxy::DistanceReading::ID(), onDistance);
+
+            // Endless loop; end the program by pressing Ctrl-C.
             while (od4.isRunning()) {
                 // Wait for a notification of a new frame.
                 sharedMemory->wait();
@@ -95,19 +106,27 @@ int32_t main(int32_t argc, char **argv) {
                     cv::waitKey(1);
                 }
 
+                ////////////////////////////////////////////////////////////////
+                // Example for creating and sending a message to other microservices; can
+                // be removed when not needed.
+                opendlv::proxy::AngleReading ar;
+                ar.angle(123.45);
+                od4.send(ar);
+
+                ////////////////////////////////////////////////////////////////
                 // Steering and acceleration/decelration.
                 //
                 // Uncomment the following lines to steer; range: +38deg (left) .. -38deg (right).
                 // Value groundSteeringRequest.groundSteering must be given in radians (DEG/180. * PI).
-                opendlv::proxy::GroundSteeringRequest gsr;
-                gsr.groundSteering(0);
-                od4.send(gsr);
+                //opendlv::proxy::GroundSteeringRequest gsr;
+                //gsr.groundSteering(0);
+                //od4.send(gsr);
 
                 // Uncomment the following lines to accelerate/decelerate; range: +0.25 (forward) .. -1.0 (backwards).
                 // Be careful!
-                opendlv::proxy::PedalPositionRequest ppr;
-                ppr.position(0);
-                od4.send(ppr);
+                //opendlv::proxy::PedalPositionRequest ppr;
+                //ppr.position(0);
+                //od4.send(ppr);
             }
 
             if (nullptr != iplimage) {
