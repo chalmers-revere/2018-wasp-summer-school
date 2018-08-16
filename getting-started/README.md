@@ -34,7 +34,7 @@ All the sensors except for the camera are connected to a small PCB board and the
 
 ### Connect to Kiwi
 
-Kiwi comes with Wifi enabled by default and is configured to share an Internet connection. Simply search in your Wifi settings for the access point (AP) that is stated on the sticker (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Place stickers on the car) on the car and connect to that AP (password: BeagleBone). Your laptop should receive an IP address within the range `192.168.8.x/24`. Once you have such an IP address, you can `ping` the computers on Kiwi or connect via `ssh` using the following credentials (user: debian, password: temppwd):
+Kiwi comes with Wifi enabled by default and is configured to share an Internet connection. Simply search in your Wifi settings for the access point (AP) that is stated on the sticker on the car and connect to that AP (password: BeagleBone). Your laptop should receive an IP address within the range `192.168.8.x/24`. Once you have such an IP address, you can `ping` the computers on Kiwi or connect via `ssh` using the following credentials (user: debian, password: temppwd):
 
 Kiwi's Raspberry Pi is running [Rasbian Stretch](https://www.raspberrypi.org/downloads/raspbian/) and BeagleBone Blue is running [Debian 9 (stretch)](https://debian.beagleboard.org/images/bone-debian-9.2-iot-armhf-2017-10-10-4gb.img.xz).
 
@@ -60,7 +60,7 @@ The third microservice is providing a web-application to visualize, record, and 
 
 To simplify the distribution of microservices and the description how to configure and run them, we are using Docker. The listed microservices are pre-configured [here](https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/rpi-camera-x264-viewer-kiwi.yml) and run already on Kiwi (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Verify this).
 
-Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.7.1:8081) (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Preferably: http://kiwi). As a result, you should see a live stream from your Kiwi's camera and the installed sensors visualized in your webbrowser.
+Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.8.1:8081). As a result, you should see a live stream from your Kiwi's camera and the installed sensors visualized in your webbrowser.
 
 
 #### Tutorial 2: Controlling Kiwi using your webbrowser
@@ -71,37 +71,15 @@ The second test is start an additional microservice to control Kiwi with your we
 
 This microservice is listening for the messages [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo for acceleration/deceleration and steering.
 
-To simplify the distribution of this microservice and the description how to configure and run it, we are using Docker. The listed microservices are pre-configured and run already on Kiwi (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Verify this).
+To simplify the distribution of this microservice and the description how to configure and run it, we are using Docker. The listed microservices are pre-configured and run already on Kiwi.
 
-Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.7.1:8081) (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Preferably: http://kiwi). You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Next, enable the button right to `Joystick` to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo. Now, you can click and drag with your mouse (or pan on a smartphone/tablet) to accelerate/decelerate and steer Kiwi.
+Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.8.1:8081). You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Next, enable the button right to `Joystick` to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo. Now, you can click and drag with your mouse (or pan on a smartphone/tablet) to accelerate/decelerate and steer Kiwi. If you have difficulties to enable the joystick on your smartphone, try the following link: [http://192.168.8.1:8081/joystick.html](http://192.168.8.1:8081/joystick.html).
 
 ---
 
-### Developing for Kiwi using a Webbrowser
-
-The last part of this "Getting Started" tutorial will demonstrate how to develop a software for Kiwi using a webbrowser. In the web-application, you'll find a code editor at the bottom. Therein, you can use Javascript to conduct computations and to set values that will be sent to Kiwi. The distance sensor readings are set in the beginning of the code as follows:
-
-```javascript
-const frontSensor = perception.front;
-const rearSensor = perception.rear;
-const leftSensor = perception.left;
-const rightSensor = perception.right;
-```
-
-You can access them using the constants `frontSensor` and so forth.
-
-To send steering or acceleration/deceleration to Kiwi, you need to set two specific variables:
-```javascript
-actuation.motor = 0; // Range -1.0 for full stop to 0.25 for moving forward.
-actuation.steering = 0; // Range 38.0/180.0 * PI (left) .. -38.0/180.0 * PI (right).
-```
-
-These values will be sent to Kiwi after you enable the code button in the top right part of the page.
-
-
 _Where to go from here?_
 
-Now, you are able to use the camera from your Kiwi, visualize, record, and replay the data, and to send steering, acceleration, and deceleration commands. You also prototyped an algorithm in your webbrowser using Javascript.
+Now, you are able to use the camera from your Kiwi, visualize, record, and replay the data, and to send steering, acceleration, and deceleration commands.
 
 Next, you can investigate our template module that is running in C++ to process video data and to interface with the car. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv-cpp).
 
