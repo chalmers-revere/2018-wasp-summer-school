@@ -52,17 +52,17 @@ int32_t main(int32_t argc, char **argv) {
             std::clog << argv[0] << ": Attached to shared memory '" << sharedMemory->name() << " (" << sharedMemory->size() << " bytes)." << std::endl;
 
             // Create an OpenCV image header using the data in the shared memory.
-            IplImage *image{nullptr};
+            IplImage *iplimage{nullptr};
             if (VERBOSE) {
                 CvSize size;
                 size.width = WIDTH;
                 size.height = HEIGHT;
 
-                image = cvCreateImageHeader(size, IPL_DEPTH_8U, 4 /* four channels: ARGB */);
+                iplimage = cvCreateImageHeader(size, IPL_DEPTH_8U, 4 /* four channels: ARGB */);
                 sharedMemory->lock();
                 {
-                    image->imageData = sharedMemory->data();
-                    image->imageDataOrigin = image->imageData;
+                    iplimage->imageData = sharedMemory->data();
+                    iplimage->imageDataOrigin = iplimage->imageData;
                 }
                 sharedMemory->unlock();
             }
@@ -73,23 +73,27 @@ int32_t main(int32_t argc, char **argv) {
                 // Wait for a notification of a new frame.
                 sharedMemory->wait();
 
+                cv::Mat img;
                 // Lock the shared memory.
                 sharedMemory->lock();
                 {
-                    // TODO: Do something with the frame; be aware of that any
-                    // code between lock/unlock is block the camera to provide
-                    // the next frame. Thus, any computationally heavy algorithms
-                    // should be placed outside lock/unlock.
-
-                    // Example: Draw a red rectangle and display image.
-                    cv::rectangle(image, cv::Point(50, 50), cv::Point(100, 100), cv::Scalar(0,0,255));
-                    if (VERBOSE && (nullptr != image)) {
-                        // Display image.
-                        cvShowImage(sharedMemory->name().c_str(), image);
-                        cv::waitKey(1);
-                    }
+                    // Copy image into cvMat structure.
+                    // Be aware of that any code between lock/unlock is blocking
+                    // the camera to provide the next frame. Thus, any
+                    // computationally heavy algorithms should be placed outside
+                    // lock/unlock.
+                    img = cv::cvarrToMat(iplimage);
                 }
                 sharedMemory->unlock();
+
+                // TODO: Do something with the frame.
+                // Example: Draw a red rectangle and display image.
+                cv::rectangle(img, cv::Point(50, 50), cv::Point(100, 100), cv::Scalar(0,0,255));
+                if (VERBOSE) {
+                    // Display image.
+                    cv::imshow(sharedMemory->name().c_str(), img);
+                    cv::waitKey(1);
+                }
 
                 // Steering and acceleration/decelration.
                 //
@@ -106,8 +110,8 @@ int32_t main(int32_t argc, char **argv) {
                 od4.send(ppr);
             }
 
-            if (nullptr != image) {
-                cvReleaseImageHeader(&image);
+            if (nullptr != iplimage) {
+                cvReleaseImageHeader(&iplimage);
             }
         }
         retCode = 0;
