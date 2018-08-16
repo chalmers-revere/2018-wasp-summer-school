@@ -72,9 +72,10 @@ int32_t main(int32_t argc, char **argv) {
 
             // Handler to receive distance readings.
             auto onDistance = [](cluon::data::Envelope &&env){
+                auto senderStamp = env.senderStamp();
                 // Now, we unpack the cluon::data::Envelope to get the desired DistanceReading.
                 opendlv::proxy::DistanceReading dr = cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(env));
-                std::cout << "Distance = " << dr.distance() << std::endl;
+                std::cout << "SenderStamp =" << senderStamp << ", distance = " << dr.distance() << std::endl;
             };
             // Finally, we register our lambda for the message identifier for opendlv::proxy::DistanceReading.
             od4.dataTrigger(opendlv::proxy::DistanceReading::ID(), onDistance);
@@ -110,7 +111,7 @@ int32_t main(int32_t argc, char **argv) {
                 // Example for creating and sending a message to other microservices; can
                 // be removed when not needed.
                 opendlv::proxy::AngleReading ar;
-                ar.angle(123.45);
+                ar.angle(123.45f);
                 od4.send(ar);
 
                 ////////////////////////////////////////////////////////////////
