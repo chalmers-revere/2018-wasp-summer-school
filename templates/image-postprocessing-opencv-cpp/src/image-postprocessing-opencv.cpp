@@ -24,6 +24,7 @@
 #include <cstdint>
 #include <iostream>
 #include <memory>
+#include <mutex>
 
 int32_t main(int32_t argc, char **argv) {
     int32_t retCode{1};
@@ -34,10 +35,10 @@ int32_t main(int32_t argc, char **argv) {
          (0 == commandlineArguments.count("height")) ) {
         std::cerr << argv[0] << " attaches to a shared memory area containing an ARGB image." << std::endl;
         std::cerr << "Usage:   " << argv[0] << " --cid=<OD4 session> --name=<name of shared memory area> [--verbose]" << std::endl;
-        std::cerr << "         --cid:     CID of the OD4Session to send and receive messages" << std::endl;
-        std::cerr << "         --name:    name of the shared memory area to attach" << std::endl;
-        std::cerr << "         --width:   width of the frame" << std::endl;
-        std::cerr << "         --height:  height of the frame" << std::endl;
+        std::cerr << "         --cid:    CID of the OD4Session to send and receive messages" << std::endl;
+        std::cerr << "         --name:   name of the shared memory area to attach" << std::endl;
+        std::cerr << "         --width:  width of the frame" << std::endl;
+        std::cerr << "         --height: height of the frame" << std::endl;
         std::cerr << "Example: " << argv[0] << " --cid=112 --name=img.argb --width=640 --height=480 --verbose" << std::endl;
     }
     else {
@@ -70,22 +71,36 @@ int32_t main(int32_t argc, char **argv) {
             // Interface to a running OpenDaVINCI session; here, you can send and receive messages.
             cluon::OD4Session od4{static_cast<uint16_t>(std::stoi(commandlineArguments["cid"]))};
 
-            // Handler to receive distance readings.
-            auto onDistance = [](cluon::data::Envelope &&env){
+            // Handler to receive distance readings (realized as C++ lambda).
+            std::mutex distancesMutex;
+            float front{0};
+            float rear{0};
+            float left{0};
+            float right{0};
+            auto onDistance = [&distancesMutex, &front, &rear, &left, &right](cluon::data::Envelope &&env){
                 auto senderStamp = env.senderStamp();
                 // Now, we unpack the cluon::data::Envelope to get the desired DistanceReading.
                 opendlv::proxy::DistanceReading dr = cluon::extractMessage<opendlv::proxy::DistanceReading>(std::move(env));
-                std::cout << "SenderStamp =" << senderStamp << ", distance = " << dr.distance() << std::endl;
+
+                // Store distance readings.
+                std::lock_guard<std::mutex> lck(distancesMutex);
+                switch (senderStamp) {
+                    case 0: front = dr.distance(); break;
+                    case 2: rear = dr.distance(); break;
+                    case 1: left = dr.distance(); break;
+                    case 3: right = dr.distance(); break;
+                }
             };
             // Finally, we register our lambda for the message identifier for opendlv::proxy::DistanceReading.
             od4.dataTrigger(opendlv::proxy::DistanceReading::ID(), onDistance);
 
             // Endless loop; end the program by pressing Ctrl-C.
             while (od4.isRunning()) {
+                cv::Mat img;
+
                 // Wait for a notification of a new frame.
                 sharedMemory->wait();
 
-                cv::Mat img;
                 // Lock the shared memory.
                 sharedMemory->lock();
                 {
@@ -101,10 +116,21 @@ int32_t main(int32_t argc, char **argv) {
                 // TODO: Do something with the frame.
                 // Example: Draw a red rectangle and display image.
                 cv::rectangle(img, cv::Point(50, 50), cv::Point(100, 100), cv::Scalar(0,0,255));
+
+                // Display image.
                 if (VERBOSE) {
-                    // Display image.
                     cv::imshow(sharedMemory->name().c_str(), img);
                     cv::waitKey(1);
+                }
+
+                ////////////////////////////////////////////////////////////////
+                // Do something with the distance readings if wanted.
+                {
+                    std::lock_guard<std::mutex> lck(distancesMutex);
+                    std::cout << "front = " << front << ", "
+                              << "rear = " << rear << ", "
+                              << "left = " << left << ", "
+                              << "right = " << right << "." << std::endl;
                 }
 
                 ////////////////////////////////////////////////////////////////
