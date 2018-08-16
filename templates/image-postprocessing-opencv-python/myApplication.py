@@ -82,8 +82,8 @@ while True:
     cv2.rectangle(img, (50, 50), (100, 100), (0,0,255), 2)
 
     # TODO: Disable the following two lines before running on Kiwi:
-    #cv2.imshow("image", img);
-    #cv2.waitKey(2);
+    cv2.imshow("image", img);
+    cv2.waitKey(2);
 
     # Example for creating and sending a message to other microservices:
     angleReading = opendlv_standard_message_set_v0_9_6_pb2.opendlv_proxy_AngleReading()
