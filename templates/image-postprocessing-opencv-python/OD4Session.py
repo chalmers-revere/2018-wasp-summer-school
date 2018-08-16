@@ -86,19 +86,20 @@ class OD4Session:
 
 
     def __process(self, e):
-        print "Received Envelope with ID = " + str(e.dataType)
+        print "Received Envelope with ID = " + str(e.dataType) + "/" + str(e.senderStamp)
 
         # Extract sent, received, and sample time point.
         sent = datetime.datetime.fromtimestamp(timestamp=e.sent.seconds) + datetime.timedelta(microseconds=e.sent.microseconds)
         received = datetime.datetime.fromtimestamp(timestamp=e.received.seconds) + datetime.timedelta(microseconds=e.received.microseconds)
         sampleTimeStamp = datetime.datetime.fromtimestamp(timestamp=e.sampleTimeStamp.seconds) + datetime.timedelta(microseconds=e.sampleTimeStamp.microseconds)
         timestamps = [sent, received, sampleTimeStamp]
+        senderStamp = e.senderStamp
 
         # Check for registered callbacks.
         if e.dataType in self.callbacks.keys():
             msg = self.callbacks[e.dataType][1]()
             msg.ParseFromString(e.serializedData)
-            thread.start_new_thread(self.callbacks[e.dataType][0], (msg, timestamps) + (self.callbacks[e.dataType][2]))
+            thread.start_new_thread(self.callbacks[e.dataType][0], (msg, senderStamp, timestamps) + (self.callbacks[e.dataType][2]))
 
 
     def __runner(self):

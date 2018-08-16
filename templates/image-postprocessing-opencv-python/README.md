@@ -13,13 +13,19 @@ sudo add-apt-repository ppa:chrberger/libcluon
 sudo apt-get update
 sudo apt-get install libcluon
 ```
-* You need to install Python, make, and OpenCV (example below is for Ubuntu 18.04 LTS):
+* You need to install Python, make, protobuf, and OpenCV (example below is for Ubuntu 18.04 LTS):
 ```Bash
-sudo apt-get install --no-install-recommends python-opencv make
+sudo apt-get install --no-install-recommends \
+    build-essential \
+    python-protobuf \
+    python-sysv-ipc \
+    python-numpy \
+    python-opencv \
+    protobuf-compiler
 ```
 
 
-## Testing the software module for your laptop using replay mode
+## Testing the software module on your laptop using replay mode
 
 This template folder contains an example how to use Python to process data residing in a shared memory area using OpenCV for image processing.
 
@@ -28,21 +34,16 @@ This template folder contains an example how to use Python to process data resid
 docker-compose -f h264-decoder-viewer.yml up
 ```
 
-* Step 2: Next, you enable access to your X11 server (GUI; necessary once per login):
-```bash
-xhost +
-```
-
-* Step 3: Next, you generate the data structures:
+* Step 2: Next, you generate the data structures:
 ```bash
 make
 ```
 
-Next, start a webbrowser and connect to your local webapp: [http://localhost:8081](http://localhost:8081) and open the folder view. Select one of the `.rec` files for replay.
+Next, start a webbrowser and connect to your local webapp: [http://localhost:8081](http://localhost:8081) and open the folder view. Select one of the `.rec` files for replay and begin the replay to fill the shared memory with image data; you can pause the replay shortly after you saw the image.
 
-* Step 4: Run the Pyton module from the folder `image-postprocessing-opencv-python`:
+* Step 3: Run the Pyton module from the folder `image-postprocessing-opencv-python`:
 ```bash
-python displayImageFromSharedMemory.py
+python myApplication.py
 ```
 
 The application should start and wait for images to come in. Your software component should open a new window and display the frame.
