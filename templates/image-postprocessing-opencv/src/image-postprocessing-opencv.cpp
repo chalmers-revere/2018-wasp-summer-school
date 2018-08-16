@@ -22,7 +22,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include <cstdint>
-#include <cstring>
 #include <iostream>
 #include <memory>
 
@@ -34,12 +33,12 @@ int32_t main(int32_t argc, char **argv) {
          (0 == commandlineArguments.count("width")) ||
          (0 == commandlineArguments.count("height")) ) {
         std::cerr << argv[0] << " attaches to a shared memory area containing an ARGB image." << std::endl;
-        std::cerr << "Usage:   " << argv[0] << " --cid=<OpenDaVINCI session> --name=<name of shared memory area> [--verbose]" << std::endl;
-        std::cerr << "         --cid:     CID of the OD4Session for communication purposes" << std::endl;
+        std::cerr << "Usage:   " << argv[0] << " --cid=<OD4 session> --name=<name of shared memory area> [--verbose]" << std::endl;
+        std::cerr << "         --cid:     CID of the OD4Session to send and receive messages" << std::endl;
         std::cerr << "         --name:    name of the shared memory area to attach" << std::endl;
         std::cerr << "         --width:   width of the frame" << std::endl;
         std::cerr << "         --height:  height of the frame" << std::endl;
-        std::cerr << "Example: " << argv[0] << " --cid=112 --name=video0.argb --width=640 --height=480 --verbose" << std::endl;
+        std::cerr << "Example: " << argv[0] << " --cid=112 --name=img.argb --width=640 --height=480 --verbose" << std::endl;
     }
     else {
         const std::string NAME{commandlineArguments["name"]};
@@ -77,24 +76,34 @@ int32_t main(int32_t argc, char **argv) {
                 // Lock the shared memory.
                 sharedMemory->lock();
                 {
-                    // TODO: Do something with the frame.
+                    // TODO: Do something with the frame; be aware of that any
+                    // code between lock/unlock is block the camera to provide
+                    // the next frame. Thus, any computationally heavy algorithms
+                    // should be placed outside lock/unlock.
 
-                    // Example: Display.
+                    // Example: Draw a red rectangle and display image.
+                    cv::rectangle(image, cv::Point(50, 50), cv::Point(100, 100), cv::Scalar(0,0,255));
                     if (VERBOSE && (nullptr != image)) {
                         // Display image.
                         cvShowImage(sharedMemory->name().c_str(), image);
                         cv::waitKey(1);
                     }
-
-                    // Example for sending a message to other microservices:
-                    // 1. Instantiate the message of interest:
-                    // opendlv::proxy::PedalPositionRequest ppr;
-                    // 2. Set the desired value:
-                    // ppr.position(20);
-                    // 3. Send the message:
-                    // od4.send(ppr);
                 }
                 sharedMemory->unlock();
+
+                // Steering and acceleration/decelration.
+                //
+                // Uncomment the following lines to steer; range: +38deg (left) .. -38deg (right).
+                // Value groundSteeringRequest.groundSteering must be given in radians (DEG/180. * PI).
+                opendlv::proxy::GroundSteeringRequest gsr;
+                gsr.groundSteering(0);
+                od4.send(gsr);
+
+                // Uncomment the following lines to accelerate/decelerate; range: +0.25 (forward) .. -1.0 (backwards).
+                // Be careful!
+                opendlv::proxy::PedalPositionRequest ppr;
+                ppr.position(0);
+                od4.send(ppr);
             }
 
             if (nullptr != image) {
