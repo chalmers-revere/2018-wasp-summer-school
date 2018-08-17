@@ -6,7 +6,6 @@ This "Getting Started" tutorial will introduce you to Kiwi, the miniature vehicl
 * [Hardware Overview](#hardware-overview)
 * [Connect to Kiwi](#connect-to-kiwi)
 * [Interacting with Kiwi using Microservices](#interacting-with-kiwi-using-microservices)
-* [Developing for Kiwi using a Webbrowser](#developing-for-kiwi-using-a-webbrowser)
 
 ---
 
@@ -44,7 +43,7 @@ Kiwi's Raspberry Pi is running [Rasbian Stretch](https://www.raspberrypi.org/dow
 
 Kiwi's software is encapsulated into separate [microservices](https://en.wikipedia.org/wiki/Microservices) that interact using UDP multicast. An overview of available microservices in use at Chalmers Revere is provided [here](https://github.com/chalmers-revere/opendlv).
 
-#### Tutorial 1: Camera Live Stream to a Webbrowser
+#### Tutorial 1: Camera Live Stream to a Webbrowser, data recording, data replay, data export
 
 The first test is to run microservices that stream the camera feed to your webbrowser. For this test, we need the following three microservices running on *Raspberry Pi*:
 
@@ -61,6 +60,8 @@ The third microservice is providing a web-application to visualize, record, and 
 To simplify the distribution of microservices and the description how to configure and run them, we are using Docker. The listed microservices are pre-configured [here](https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/rpi-camera-x264-viewer-kiwi.yml) and run already on Kiwi (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Verify this).
 
 Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.8.1:8081). As a result, you should see a live stream from your Kiwi's camera and the installed sensors visualized in your webbrowser.
+
+To record the live data, simply click on the record button that should turn red. You can stop the recording by pressing that button again. To download a recording, click on the folder button next to the record button; a new page is presented that shows the available recording files that reside on Kiwi. You can select the file you would like to download by clicking on the button labeled with `.rec`. If you want to export the recorded messages a separate `.csv`, simply click on the button with the corresponding label. To delete a recording, click on the trash bin and to start a replay, simply click on the replay button.
 
 
 #### Tutorial 2: Controlling Kiwi using your webbrowser
