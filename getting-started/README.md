@@ -33,9 +33,24 @@ All the sensors except for the camera are connected to a small PCB board and the
 
 ### Connect to Kiwi
 
-Kiwi comes with Wifi enabled by default and is configured to share an Internet connection. Simply search in your Wifi settings for the access point (AP) that is stated on the sticker on the car and connect to that AP (password: BeagleBone). Your laptop should receive an IP address within the range `192.168.8.x/24`. Once you have such an IP address, you can `ping` the computers on Kiwi or connect via `ssh` using the following credentials (user: debian, password: temppwd):
+Kiwi comes with Wifi enabled by default and is configured to share an Internet connection. Simply search in your Wifi settings for the access point (AP) that is stated on the sticker on the car and connect to that AP (password: BeagleBone). Your laptop should receive an IP address within the range `192.168.8.x/24`. Once you have such an IP address, you can `ping` the computers on Kiwi or connect via `ssh` using the following credentials for beaglebone (user: debian, password: temppwd) and pi (user:pi, password: raspberry).
 
 Kiwi's Raspberry Pi is running [Rasbian Stretch](https://www.raspberrypi.org/downloads/raspbian/) and BeagleBone Blue is running [Debian 9 (stretch)](https://debian.beagleboard.org/images/bone-debian-9.2-iot-armhf-2017-10-10-4gb.img.xz).
+
+To ssh to the beaglebone
+`ssh debian@192.168.8.1`
+To ssh to the pi
+`ssh -p 8880 pi@192.168.8.1`
+
+### Update the backend on Pi
+Connect to the raspberry pi and get root permissions through
+`sudo -i`
+then run the following
+`cd ~/2018-wasp-summer-school/getting-started/`
+`docker-compose -f rpi-camera-x264-viewer-kiwi.yml down`
+`git pull`
+`docker-compose -f rpi-camera-x264-viewer-kiwi.yml up -d`
+Once it finish loading, you are done.
 
 ---
 
