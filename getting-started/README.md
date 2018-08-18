@@ -90,6 +90,7 @@ Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8
 
 To record the live data, simply click on the record button that should turn red. You can stop the recording by pressing that button again. To download a recording, click on the folder button next to the record button; a new page is presented that shows the available recording files that reside on Kiwi. You can select the file you would like to download by clicking on the button labeled with `.rec`. If you want to export the recorded messages a separate `.csv`, simply click on the button with the corresponding label. To delete a recording, click on the trash bin and to start a replay, simply click on the replay button.
 
+---
 
 #### Getting Started 2: Controlling Kiwi using your webbrowser
 
