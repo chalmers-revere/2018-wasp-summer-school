@@ -1,4 +1,4 @@
-# Getting Started Tutorial
+# Getting Started Tutorials
 
 This "Getting Started" tutorial will introduce you to Kiwi, the miniature vehicle platform from Chalmers Revere. Its hardware and software are entirely open source and you are invited to use, change, and contribute.
 
