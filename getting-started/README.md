@@ -5,6 +5,7 @@ This "Getting Started" tutorial will introduce you to Kiwi, the miniature vehicl
 ## Table of Contents
 * [Hardware Overview](#hardware-overview)
 * [Connect to Kiwi](#connect-to-kiwi)
+* [Update Kiwi](#update-kiwi)
 * [Interacting with Kiwi using Microservices](#interacting-with-kiwi-using-microservices)
 
 ---
@@ -42,15 +43,16 @@ To ssh to the beaglebone
 To ssh to the pi
 `ssh -p 8880 pi@192.168.8.1`
 
-### Update the backend on Pi
-Connect to the raspberry pi and get root permissions through
+### Update Kiwi
+
+Connect to the Raspberry Pi and get root permissions through
 `sudo -i`
 then run the following
 `cd ~/2018-wasp-summer-school/getting-started/`
 `docker-compose -f rpi-camera-x264-viewer-kiwi.yml down`
 `git pull`
 `docker-compose -f rpi-camera-x264-viewer-kiwi.yml up -d`
-Once it finish loading, you are done.
+Once it finish downloading, you are done.
 
 ---
 
@@ -74,7 +76,7 @@ The second microservice is attaching to the shared memory area that contains the
 
 The third microservice is providing a web-application to visualize, record, and replay any messages that are exchanged among the running microservices.
 
-To simplify the distribution of microservices and the description how to configure and run them, we are using Docker. The listed microservices are pre-configured [here](https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/rpi-camera-x264-viewer-kiwi.yml) and run already on Kiwi (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Verify this).
+To simplify the distribution of microservices and the description how to configure and run them, we are using Docker. The listed microservices are pre-configured [here](https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/rpi-camera-x264-viewer-kiwi.yml) and run already on Kiwi.
 
 _Getting Started:_
 
