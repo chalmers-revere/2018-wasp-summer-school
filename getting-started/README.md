@@ -128,7 +128,7 @@ You can stop the application by pressing `Ctrl-C` followed by the command `docke
 
 ---
 
-#### Getting Started 4: Extracting .csv files from a recording on your computer
+#### Getting Started 4: Extracting `.csv` files from a recording on your computer
 
 The fourth tutorial is to extract `.csv` files from a recording file for data post-processing. A `.csv` file is create for every message type that is exchanged on Kiwi including the sent, received, and sample timestamps.
 
@@ -143,6 +143,26 @@ _Tutorial:_
 The application is available when you read a message stating `[opendlv-vehicle-view] Web server listening on port: 8081, joining live OD4Session 112, using OD4Session 253 for playback.`
 
 Now, you can open a recent web browser (like Chrome 68+ or Safari 11+ for example) and point it to http://localhost:8081. Open the folder view and click on the button labeled `.csv` to extract the messages in separate `.csv` files and get a download offered for a `.zip`-file containing all extracted `.csv` files. Depending on the size of the selected recording file, this step might take up to a few minutes.
+
+You can stop the application by pressing `Ctrl-C` followed by the command `docker-compose -f h264-decoder-viewer.yml down` in a terminal.
+
+---
+
+#### Getting Started 4: Extracting `.csv`/`.png` files from a recording on your computer
+
+The fourth tutorial is to extract `.csv` files from a recording file for data post-processing. A `.csv` file is create for every message type that is exchanged on Kiwi including the sent, received, and sample timestamps.
+
+_Prerequisites:_
+
+* Have tutorial 3 completed.
+
+_Tutorial:_
+
+* If not already running, start the application description: `docker-compose -f h264-decoder-viewer.yml up` in a terminal.
+
+The application is available when you read a message stating `[opendlv-vehicle-view] Web server listening on port: 8081, joining live OD4Session 112, using OD4Session 253 for playback.`
+
+Now, you can open Chrome (version 68+) and point it to http://localhost:8081. Open the folder view and click on the button labeled `.csv/.png` to extract the messages in separate `.csv` files and export the video frames as `.png` files. This step takes a while to complete as during the first time, a specific Docker image is built (takes around 5min) and afterwards, depending on the length of your `.rec`-file, the data is processed. Do not close the browser window and wait for your download. Thus, it is recommended to run this tutorial with a small recording file first.
 
 You can stop the application by pressing `Ctrl-C` followed by the command `docker-compose -f h264-decoder-viewer.yml down` in a terminal.
 
