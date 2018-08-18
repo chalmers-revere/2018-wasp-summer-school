@@ -24,8 +24,9 @@ sudo apt-get install --no-install-recommends \
     protobuf-compiler
 ```
 
+---
 
-## Testing the software module on your laptop using replay mode
+### Developing and testing the Python application on your laptop using replay mode
 
 This template folder contains an example how to use Python to process data residing in a shared memory area using OpenCV for image processing.
 
@@ -58,3 +59,44 @@ python myApplication.py
 The application should start and wait for images to come in. Now, continue to replay your recording; the Python application should open a new window and display the frames. Furthermore, the code also display the distance readings from the sensors.
 
 You can stop the Pythong application by pressing `Ctrl-C`. When you are modifying the Python application, repeat step 4 after any change modification.
+
+---
+
+### Deplyoing and testing the Python application on Kiwi
+
+After you have completed your development locally and you are ready for testing on Kiwi, you need to package the software into a Docker image.
+
+* Step 1: Have the previous tutorial complete.
+
+* Step 2: **Make sure that you commented all debug windows from OpenCV as there won't be a GUI available on Kiwi.''
+
+* Step 3: Change the CID from 253 (used for replay mode) to 112 (used on Kiwi) so that the message that you are sending are processed properly.
+
+* Step 4: Build the Docker image (don't forget the trailing `.`). The first time build process can take a while:
+```Bash
+docker build -t myapp -f Dockerfile.armhf .
+```
+
+* Step 5: Next, save the created Docker image to a file:
+```Bash
+docker save myapp > myapp.tar
+```
+
+* Step 6: Now, you copy the Docker image to Kiwi (the upload can take a few minutes):
+```Bash
+scp -P 8880 myapp.tar pi@192.168.8.1:~
+```
+
+* Step 7: Your application image is now on Kiwi; next, login to Kiwi to start it:
+```Bash
+ssh -p 8880 pi@192.168.8.1
+```
+
+* Step 8: Assuming that the Getting Started Tutorial 2 (Controlling Kiwi using your webbrowser) is still running, you can load your application into Docker and start it:
+```Bash
+docker load < myapp.tar
+docker run --rm -ti --init --ipc=host --net=host -v /tmp:/tmp myapp:latest 
+```
+
+When everything has worked correctly, you should see a message of type opendlv.proxy.AngleReading in the message overview of the web application.
+
