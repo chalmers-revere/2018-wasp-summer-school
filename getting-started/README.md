@@ -46,13 +46,19 @@ To ssh to the pi
 ### Update Kiwi
 
 Connect to the Raspberry Pi and get root permissions through
-`sudo -i`
-then run the following
-`cd ~/2018-wasp-summer-school/getting-started/`
-`docker-compose -f rpi-camera-x264-viewer-kiwi.yml down`
-`git pull`
-`docker-compose -f rpi-camera-x264-viewer-kiwi.yml up -d`
-Once it finish downloading, you are done.
+```Bash
+sudo -i
+```
+
+then run the following:
+```Bash
+cd ~/2018-wasp-summer-school/getting-started
+docker-compose -f rpi-camera-x264-viewer-kiwi.yml down
+git pull
+docker-compose -f rpi-camera-x264-viewer-kiwi.yml up -d
+```
+
+Once it finished the download, you are done and you can close the connection.
 
 ---
 
