@@ -148,9 +148,9 @@ You can stop the application by pressing `Ctrl-C` followed by the command `docke
 
 ---
 
-#### Getting Started 4: Extracting `.csv`/`.png` files from a recording on your computer
+#### Getting Started 5: Extracting `.csv`/`.png` files from a recording on your computer
 
-The fourth tutorial is to extract `.csv` files from a recording file for data post-processing. A `.csv` file is create for every message type that is exchanged on Kiwi including the sent, received, and sample timestamps.
+The fifth tutorial is to extract `.csv` and `.png` files from a recording file for data post-processing. A `.csv` file is create for every message type that is exchanged on Kiwi including the sent, received, and sample timestamps and a `.png` file is created for each video frame and named according to the sample timestamp.
 
 _Prerequisites:_
 
@@ -172,6 +172,7 @@ _Where to go from here?_
 
 Now, you are able to use the camera from your Kiwi, visualize, record, and replay the data, and to send steering, acceleration, and deceleration commands.
 
-Next, you can investigate our template module that is running in C++ to process video data and to interface with the car. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv-cpp).
+Next, you can investigate our template module that is running in Python to process video data and to send steering/acceleration/deceleration commands to Kiwi. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv-python) next to further descriptions how to develop and test your Python application.
 
-Alternatively, you can investigate our template module that is running in Python to process video data. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv-python).
+Alternatively, you can investigate our template module that is running in C++ to process video data and to interface with Kiwi. You find the template [here](https://github.com/chalmers-revere/2018-wasp-summer-school/tree/master/templates/image-postprocessing-opencv-cpp) next to further descriptions how to develop and test your C++ application
+
