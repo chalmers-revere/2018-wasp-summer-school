@@ -58,13 +58,15 @@ Once it finish loading, you are done.
 
 Kiwi's software is encapsulated into separate [microservices](https://en.wikipedia.org/wiki/Microservices) that interact using UDP multicast. An overview of available microservices in use at Chalmers Revere is provided [here](https://github.com/chalmers-revere/opendlv).
 
-#### Tutorial 1: Camera Live Stream to a Webbrowser, data recording, data replay, data export
+#### Getting Started 1: Camera Live Stream to a Webbrowser, data recording, data replay, data export
 
-The first test is to run microservices that stream the camera feed to your webbrowser. For this test, we need the following three microservices running on *Raspberry Pi*:
+The first tutorial is to run microservices that stream the camera feed to your webbrowser. For this tutorial, we need the following three microservices running on *Raspberry Pi*:
 
 1. [opendlv-device-camera-rpi](https://github.com/chalmers-revere/opendlv-device-camera-rpi) - accessing Raspberry Pi's camera
 2. [opendlv-video-x264-encoder](https://github.com/chalmers-revere/opendlv-video-x264-encoder) - converting a camera frame into an h264 frame
 3. [opendlv-kiwi-view](https://github.com/chalmers-revere/opendlv-kiwi-view) - web application to visualize, record, and replay data
+
+_Overview:_
 
 The first microservice is opening the camera and reading the images into two shared memory areas - one contains the frame in [I420](https://wiki.videolan.org/YUV/#I420) pixel format and the other contains the frame in ARGB pixel format. While the latter might be more convenient to be used with image detection algorithms, the former is used for h264 encoding.
 
@@ -74,22 +76,53 @@ The third microservice is providing a web-application to visualize, record, and 
 
 To simplify the distribution of microservices and the description how to configure and run them, we are using Docker. The listed microservices are pre-configured [here](https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/getting-started/rpi-camera-x264-viewer-kiwi.yml) and run already on Kiwi (![#f03c15](https://placehold.it/15/f03c15/000000?text=+)TODO: Verify this).
 
+_Getting Started:_
+
 Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.8.1:8081). As a result, you should see a live stream from your Kiwi's camera and the installed sensors visualized in your webbrowser.
 
 To record the live data, simply click on the record button that should turn red. You can stop the recording by pressing that button again. To download a recording, click on the folder button next to the record button; a new page is presented that shows the available recording files that reside on Kiwi. You can select the file you would like to download by clicking on the button labeled with `.rec`. If you want to export the recorded messages a separate `.csv`, simply click on the button with the corresponding label. To delete a recording, click on the trash bin and to start a replay, simply click on the replay button.
 
 
-#### Tutorial 2: Controlling Kiwi using your webbrowser
+#### Getting Started 2: Controlling Kiwi using your webbrowser
 
-The second test is start an additional microservice to control Kiwi with your webbrowser. For this test, we run all microservices from *Tutorial 1* and add the following microservice on *BeagleBone Blue*:
+The second tutorial is start an additional microservice to control Kiwi with your webbrowser. For this tutorial, we run all microservices from *Tutorial 1* and add the following microservice on *BeagleBone Blue*:
 
 * [opendlv-device-kiwi-prugw](https://github.com/chalmers-revere/opendlv-device-kiwi-prugw) - interfacing with Kiwi's motor and servo
+
+_Overview:_
 
 This microservice is listening for the messages [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo for acceleration/deceleration and steering.
 
 To simplify the distribution of this microservice and the description how to configure and run it, we are using Docker. The listed microservices are pre-configured and run already on Kiwi.
 
+_Getting Started:_
+
 Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.8.1:8081). You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Next, enable the button right to `Joystick` to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo. Now, you can click and drag with your mouse (or pan on a smartphone/tablet) to accelerate/decelerate and steer Kiwi. If you have difficulties to enable the joystick on your smartphone, try the following link: [http://192.168.8.1:8081/joystick.html](http://192.168.8.1:8081/joystick.html).
+
+---
+
+#### Getting Started 3: Local replay on your computer
+
+The third tutorial is to download a recording file and replay it on your local system. For this test, we assume that you have completed tutorial 1.
+
+_Prerequisites:_
+
+* We suggest to use our pre-configured [Ubuntu 18.04 LTS Virtual Machine](http://www.cse.chalmers.se/~yuek/Ubuntu_18.04_64-bit.ova) for [VirtualBox](virtualbox.org) that contains already the necessary software (username: `summerschool`, password: `Summer2018`). If you don't have VirtualBox installed, you can download it from [here](virtualbox.org) for your platform. Afterwards, download the pre-configured virtual machine and import the appliance into VirtualBox.
+
+If you want to use your own native Linux installation, please meet the following requirements:
+* [You need to install Docker for your platform](https://docs.docker.com/install/linux/docker-ce/debian/#install-docker-ce)
+* [You need to install `docker-compose`](https://docs.docker.com/compose/install/#install-compose)
+* It is recommended to use the Chrome web-browser 68+.
+
+_Tutorial:_
+
+* Download the `.rec` file of interest from Kiwi to your computer into the folder `$HOME/recordings`. If the folder does not exist, you can create it as follows: `mkdir -p $HOME/recordings` running in a Terminal.
+* Next, download the application description (a .yml-file for docker-compose) to `$HOME`: `wget https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/templates/image-postprocessing-opencv-python/h264-decoder-viewer.yml -O h264-decoder-viewer.yml`
+* Now, start the application description: `docker-compose -f h264-decoder-viewer.yml up`
+
+The application is available when you read a message stating `[opendlv-vehicle-view] Web server listening on port: 8081, joining live OD4Session 112, using OD4Session 253 for playback.`
+
+Now, you can open a recent web browser (like Chrome 68+ or Safari 11+ for example) and point it to http://localhost:8081. Open the folder view and select the recording file to replay. Click on the play button next to the file entry.
 
 ---
 
