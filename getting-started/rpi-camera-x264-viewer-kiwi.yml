@@ -42,7 +42,7 @@ services:
 
     opendlv-kiwi-view-webrtc-armhf:
         container_name: opendlv-vehicle-view
-        image: chrberger/opendlv-kiwi-view-webrtc-multi:v0.0.2
+        image: chrberger/opendlv-kiwi-view-webrtc-multi:v0.0.3
         restart: always
         network_mode: "host"
         volumes:
