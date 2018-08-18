@@ -62,7 +62,7 @@ You can stop the Pythong application by pressing `Ctrl-C`. When you are modifyin
 
 ---
 
-### Deplyoing and testing the Python application on Kiwi
+### Deploying and testing the Python application on Kiwi
 
 After you have completed your development locally and you are ready for testing on Kiwi, you need to package the software into a Docker image.
 
