@@ -66,11 +66,11 @@ You can stop the Pythong application by pressing `Ctrl-C`. When you are modifyin
 
 After you have completed your development locally and you are ready for testing on Kiwi, you need to package the software into a Docker image.
 
-* Step 1: Have the previous tutorial complete.
+* Step 1: Have the previous tutorial completed.
 
 * Step 2: **Make sure that you commented all debug windows from OpenCV as there won't be a GUI available on Kiwi.''
 
-* Step 3: Change the CID from 253 (used for replay mode) to 112 (used on Kiwi) so that the message that you are sending are processed properly.
+* Step 3: Don't forget to change the CID from 253 (used for replay mode) to 112 (used on Kiwi) so that the messages that you are sending are processed properly.
 
 * Step 4: Build the Docker image (don't forget the trailing `.`). The first time build process can take a while:
 ```Bash
@@ -99,4 +99,33 @@ docker run --rm -ti --init --ipc=host --net=host -v /tmp:/tmp myapp:latest
 ```
 
 When everything has worked correctly, you should see a message of type opendlv.proxy.AngleReading in the message overview of the web application.
+
+---
+
+### Updating your Python application on Kiwi
+
+After you have completed your development locally and you are ready for testing on Kiwi, you need to package the software into a Docker image.
+
+* Step 1: Have the previous tutorial completed.
+
+* Step 2: **Make sure that you commented all debug windows from OpenCV as there won't be a GUI available on Kiwi.''
+
+* Step 3: Don't forget to change the CID from 253 (used for replay mode) to 112 (used on Kiwi) so that the messages that you are sending are processed properly.
+
+* Step 4: Copy your application myApplication.py to Kiwi:
+```Bash
+scp -P 8880 myApplication.py pi@192.168.8.1:~
+```
+
+* Step 5: Your application image is now on Kiwi; next, login to Kiwi to start it:
+```Bash
+ssh -p 8880 pi@192.168.8.1
+```
+
+* Step 6: Assuming that the Getting Started Tutorial 2 (Controlling Kiwi using your webbrowser) is still running, you can load your application into Docker and start it:
+```Bash
+docker run --rm -ti --init --ipc=host --net=host -v /tmp:/tmp -v $HOME/myApplication.py:/opt/sources/myApplication.py myapp:latest
+```
+The parameter `-v $HOME/myApplication.py:/opt/sources/myApplication.py` is mapping your Python application into the running Docker container and thus, replacing the one that is contained in the Docker image. If you need more files to run your application (e.g., `.xml` files), simply add further parameters like `-v $HOME/myFile.xml:/opt/sources/myFile.xml` before the past part of the previous command `myapp:latest`. 
+
 
