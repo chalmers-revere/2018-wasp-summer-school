@@ -116,13 +116,35 @@ If you want to use your own native Linux installation, please meet the following
 
 _Tutorial:_
 
-* Download the `.rec` file of interest from Kiwi to your computer into the folder `$HOME/recordings`. If the folder does not exist, you can create it as follows: `mkdir -p $HOME/recordings` running in a Terminal.
-* Next, download the application description (a .yml-file for docker-compose) to `$HOME`: `wget https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/templates/image-postprocessing-opencv-python/h264-decoder-viewer.yml -O h264-decoder-viewer.yml`
-* Now, start the application description: `docker-compose -f h264-decoder-viewer.yml up`
+* Download the `.rec` file of interest from Kiwi to your computer into the folder `$HOME/recordings`. If the folder does not exist, you can create it as follows: `mkdir -p $HOME/recordings` running in a terminal.
+* Next, download the application description (a .yml-file for docker-compose) to `$HOME` in a terminal: `wget https://raw.githubusercontent.com/chalmers-revere/2018-wasp-summer-school/master/templates/image-postprocessing-opencv-python/h264-decoder-viewer.yml -O h264-decoder-viewer.yml`.
+* Now, start the application description: `docker-compose -f h264-decoder-viewer.yml up` in a terminal.
 
 The application is available when you read a message stating `[opendlv-vehicle-view] Web server listening on port: 8081, joining live OD4Session 112, using OD4Session 253 for playback.`
 
 Now, you can open a recent web browser (like Chrome 68+ or Safari 11+ for example) and point it to http://localhost:8081. Open the folder view and select the recording file to replay. Click on the play button next to the file entry.
+
+You can stop the application by pressing `Ctrl-C` followed by the command `docker-compose -f h264-decoder-viewer.yml down` in a terminal.
+
+---
+
+#### Getting Started 4: Extracting .csv files from a recording on your computer
+
+The fourth tutorial is to extract `.csv` files from a recording file for data post-processing. A `.csv` file is create for every message type that is exchanged on Kiwi including the sent, received, and sample timestamps.
+
+_Prerequisites:_
+
+* Have tutorial 3 completed.
+
+_Tutorial:_
+
+* If not already running, start the application description: `docker-compose -f h264-decoder-viewer.yml up` in a terminal.
+
+The application is available when you read a message stating `[opendlv-vehicle-view] Web server listening on port: 8081, joining live OD4Session 112, using OD4Session 253 for playback.`
+
+Now, you can open a recent web browser (like Chrome 68+ or Safari 11+ for example) and point it to http://localhost:8081. Open the folder view and click on the button labeled `.csv` to extract the messages in separate `.csv` files and get a download offered for a `.zip`-file containing all extracted `.csv` files. Depending on the size of the selected recording file, this step might take up to a few minutes.
+
+You can stop the application by pressing `Ctrl-C` followed by the command `docker-compose -f h264-decoder-viewer.yml down` in a terminal.
 
 ---
 
