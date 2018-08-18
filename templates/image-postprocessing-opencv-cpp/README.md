@@ -56,7 +56,7 @@ for i in $(docker images|tr -s " " ";"|grep "none"|cut -f3 -d";"); do docker rmi
 
 ---
 
-### Deplyoing and testing the Python application on Kiwi
+### Deploying and testing the Python application on Kiwi
 
 When you are ready to test the features and performance of your software component on Kiwi in live mode, you need to build the software component for `armhf`. Therefore, you will find a file named `Dockerfile.armhf` in this template folder that describes the necessary steps to build your software component for `armhf`.  
 
