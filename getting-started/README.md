@@ -86,7 +86,7 @@ To simplify the distribution of microservices and the description how to configu
 
 _Getting Started:_
 
-Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.8.1:8081). As a result, you should see a live stream from your Kiwi's camera and the installed sensors visualized in your webbrowser.
+Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://kiwi.opendlv.io](http://kiwi.opendlv.io). As a result, you should see a live stream from your Kiwi's camera and the installed sensors visualized in your webbrowser.
 
 To record the live data, simply click on the record button that should turn red. You can stop the recording by pressing that button again. To download a recording, click on the folder button next to the record button; a new page is presented that shows the available recording files that reside on Kiwi. You can select the file you would like to download by clicking on the button labeled with `.rec`. If you want to export the recorded messages a separate `.csv`, simply click on the button with the corresponding label. To delete a recording, click on the trash bin and to start a replay, simply click on the replay button.
 
@@ -106,7 +106,7 @@ To simplify the distribution of this microservice and the description how to con
 
 _Getting Started:_
 
-Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://192.168.8.1:8081](http://192.168.8.1:8081). You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Next, enable the button right to `Joystick` to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo. Now, you can click and drag with your mouse (or pan on a smartphone/tablet) to accelerate/decelerate and steer Kiwi. If you have difficulties to enable the joystick on your smartphone, try the following link: [http://192.168.8.1:8081/joystick.html](http://192.168.8.1:8081/joystick.html).
+Now, connect your laptop's webbrowser to the *Raspberry Pi's* IP address, port 8081: [http://kiwi.opendlv.io](http://kiwi.opendlv.io). You should still see a live stream from your Kiwi's camera visualized in your webbrowser. Next, enable the button right to `Joystick` to send [opendlv.proxy.PedalPositionRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L208-L210) and [opendlv.proxy.GroundSteeringRequest](https://github.com/chalmers-revere/opendlv.standard-message-set/blob/fb11778810a37d76d45e83e52ea054dac2e2a350/opendlv.odvd#L216-L218) to interface with Kiwi's motor and servo. Now, you can click and drag with your mouse (or pan on a smartphone/tablet) to accelerate/decelerate and steer Kiwi. If you have difficulties to enable the joystick on your smartphone, try the following link: [http://kiwi.opendlv.io/joystick.html](http://kiwi.opendlv.io/joystick.html).
 
 ---
 
