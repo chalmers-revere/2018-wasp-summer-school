@@ -27,11 +27,24 @@ import OD4Session
 import opendlv_standard_message_set_v0_9_6_pb2
 
 ################################################################################
+# This dictionary contains all distance values to be filled by function onDistance(...).
+distances = { "front": 0.0, "left": 0.0, "right": 0.0, "rear": 0.0 };
+
+################################################################################
 # This callback is triggered whenever there is a new distance reading coming in.
 def onDistance(msg, senderStamp, timeStamps):
     print "Received distance; senderStamp=" + str(senderStamp)
     print "sent: " + str(timeStamps[0]) + ", received: " + str(timeStamps[1]) + ", sample time stamps: " + str(timeStamps[2])
     print msg
+    if senderStamp == 0:
+        distances["front"] = msg.distance
+    if senderStamp == 1:
+        distances["left"] = msg.distance
+    if senderStamp == 2:
+        distances["rear"] = msg.distance
+    if senderStamp == 3:
+        distances["right"] = msg.distance
+
 
 # Create a session to send and receive messages from a running OD4Session;
 # Replay mode: CID = 253
@@ -89,6 +102,13 @@ while True:
     # TODO: Disable the following two lines before running on Kiwi:
     cv2.imshow("image", img);
     cv2.waitKey(2);
+
+    ############################################################################
+    # Example: Accessing the distance readings.
+    print "Front = " + str(distances["front"])
+    print "Left = " + str(distances["left"])
+    print "Right = " + str(distances["right"])
+    print "Rear = " + str(distances["rear"])
 
     ############################################################################
     # Example for creating and sending a message to other microservices; can
