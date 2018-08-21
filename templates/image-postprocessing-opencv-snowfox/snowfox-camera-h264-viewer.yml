@@ -1,0 +1,86 @@
+# Copyright (C) 2018  Christian Berger
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+version: '2'
+
+services:
+    opendlv-vehicle-view:
+        container_name: opendlv-vehicle-view
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.23
+        restart: always
+        network_mode: "host"
+        volumes:
+        - ~/recordings:/opt/vehicle-view/recordings
+        - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+        - OD4SESSION_CID=111
+        ports:
+        - "8081:8081"
+
+
+    # Applanix GPS (Snowfox)
+    dev-gps-pos:
+        image: chalmersrevere/opendlv-device-gps-pos-multi:v0.0.5
+        restart: always
+        network_mode: "host"
+        command: "opendlv-device-gps-pos --pos_ip=10.42.42.40 --pos_port=5602 --cid=111"
+
+
+    # Velodyne HDl32 Lidar (Snowfox)
+    dev-lidar-hdl32e:
+       image: chalmersrevere/opendlv-device-lidar-hdl32e-multi:v0.0.9
+       restart: on-failure
+       network_mode: "host"
+       command: "opendlv-device-lidar-hdl32e --hdl32e_ip=0.0.0.0 --hdl32e_port=2368 --cid=111"
+
+
+    # Accessing a video stream using OpenCV.
+    dev-camera-opencv:
+        image: chalmersrevere/opendlv-device-camera-opencv-multi:v0.0.10
+        restart: on-failure
+        ipc: "host"
+        network_mode: "host"
+        volumes:
+        - /tmp:/tmp
+        command: "--camera=http://root:pass@10.42.42.16/axis-cgi/mjpg/video.cgi\\?channel=0\\&.mjpg --width=640 --height=480 --freq=20 --name.i420=img.i420 --name.argb=img.argb"
+
+
+    # Encoder for dev-camera-opencv
+    video-x264-encoder-amd64:
+        build:
+            context: https://github.com/chalmers-revere/opendlv-video-x264-encoder.git
+            dockerfile: Dockerfile.amd64
+        restart: always
+        network_mode: "host"
+        ipc: "host"
+        volumes:
+        - /tmp:/tmp
+        command: "--cid=111 --name=img.i420 --width=640 --height=480"
+
+
+################################################################################
+#
+# The following services need an odsupercomponent.
+#
+################################################################################
+
+    odsupercomponent:
+        image: seresearch/opendlv-rhino-on-opendlv-on-opendlv-core-on-opendavinci-on-base:v0.1.5
+        restart: on-failure
+        network_mode: "host"
+        volumes:
+        - ./configuration:/opt/opendlv.data/configuration
+        command: "/opt/od4/bin/odsupercomponent --configuration=/opt/opendlv.data/configuration --cid=111"
+
