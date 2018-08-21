@@ -33,7 +33,7 @@ services:
 
     opendlv-kiwi-view-webrtc-amd64:
         container_name: opendlv-vehicle-view
-        image: chrberger/opendlv-kiwi-view-webrtc-multi:v0.0.5
+        image: chrberger/opendlv-kiwi-view-webrtc-multi:v0.0.6
         restart: on-failure
         network_mode: "host"
         volumes:
