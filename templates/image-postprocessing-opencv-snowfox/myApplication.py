@@ -21,6 +21,7 @@ import sysv_ipc
 # numpy and cv2 are needed to access, modify, or display the pixels
 import numpy
 import cv2
+import math
 # OD4Session is needed to send and receive messages
 import OD4Session
 # Import the OpenDLV Standard Message Set.
@@ -115,21 +116,26 @@ while True:
     #
     # Uncomment the following lines to steer; range: +38deg (left) .. -38deg (right).
     # Value groundSteeringRequest.groundSteering must be given in radians (DEG/180. * PI).
-    #groundSteeringRequest = opendlv_standard_message_set_v0_9_6_pb2.opendlv_proxy_GroundSteeringRequest()
-    #groundSteeringRequest.groundSteering = 0
+    groundSteeringRequest = opendlv_standard_message_set_v0_9_6_pb2.opendlv_proxy_GroundSteeringRequest()
+    groundSteeringRequest.groundSteering = 0
     #session.send(1090, groundSteeringRequest.SerializeToString());
 
     # Uncomment the following lines to accelerate/decelerate; range: +0.25 (forward) .. -1.0 (backwards).
     # Be careful!
-    #pedalPositionRequest = opendlv_standard_message_set_v0_9_6_pb2.opendlv_proxy_PedalPositionRequest()
-    #pedalPositionRequest.position = 0
+    pedalPositionRequest = opendlv_standard_message_set_v0_9_6_pb2.opendlv_proxy_PedalPositionRequest()
+    pedalPositionRequest.position = 0
     #session.send(1086, pedalPositionRequest.SerializeToString());
 
     # Uncomment the following lines to steer; range: +10 (left) .. -10 (right).
     # Uncomment the following lines to accelerate/decelerate; range: +50.0 (forward) .. -10.0 (deceleration).
     actuationRequest = opendlv_standard_message_set_v0_9_6_pb2.opendlv_proxy_ActuationRequest()
-    actuationRequest.acceleration = 0
-    actuationRequest.steering = 0
+    actuationRequest.steering = (groundSteeringRequest.groundSteering / math.pi * 180.0 / 38.0) * 10.0
+    if pedalPositionRequest.position > 0:
+        # Scale to 0 .. 20
+        actuationRequest.acceleration = pedalPositionRequest.position / 0.25 * 20.0
+    else:
+        # Scale to 0 .. -6
+        actuationRequest.acceleration = pedalPositionRequest.position * 6.0
     actuationRequest.isValid = True
     #session.send(160, actuationRequest.SerializeToString());
 
