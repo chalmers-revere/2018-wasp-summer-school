@@ -126,7 +126,7 @@ while True:
     #session.send(1086, pedalPositionRequest.SerializeToString());
 
     # Uncomment the following lines to steer; range: +10 (left) .. -10 (right).
-    # Uncomment the following lines to accelerate/decelerate; range: +3.0 (forward) .. -10.0 (deceleration).
+    # Uncomment the following lines to accelerate/decelerate; range: +50.0 (forward) .. -10.0 (deceleration).
     actuationRequest = opendlv_standard_message_set_v0_9_6_pb2.opendlv_proxy_ActuationRequest()
     actuationRequest.acceleration = 0
     actuationRequest.steering = 0
