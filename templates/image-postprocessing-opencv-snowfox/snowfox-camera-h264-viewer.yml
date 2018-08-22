@@ -18,7 +18,7 @@ version: '2'
 services:
     opendlv-vehicle-view:
         container_name: opendlv-vehicle-view
-        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.23
+        image: chalmersrevere/opendlv-vehicle-view-multi:v0.0.25
         restart: always
         network_mode: "host"
         volumes:
@@ -26,6 +26,7 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock
         environment:
         - OD4SESSION_CID=111
+        - OPENDLV_VEHICLE_VIEW_PLATFORM=Snowfox
         ports:
         - "8081:8081"
 
