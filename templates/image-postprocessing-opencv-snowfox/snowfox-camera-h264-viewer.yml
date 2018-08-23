@@ -48,6 +48,7 @@ services:
 
     # Applanix GPS (Snowfox)
     dev-gps-pos:
+        container_name: applanix
         image: chalmersrevere/opendlv-device-gps-pos-multi:v0.0.5
         restart: always
         network_mode: "host"
@@ -56,6 +57,7 @@ services:
 
     # Velodyne HDl32 Lidar (Snowfox)
     dev-lidar-hdl32e:
+       container_name: lidar
        image: chalmersrevere/opendlv-device-lidar-hdl32e-multi:v0.0.9
        restart: on-failure
        network_mode: "host"
@@ -64,6 +66,7 @@ services:
 
     # Accessing a video stream using OpenCV.
     dev-camera-opencv:
+        container_name: camera
         image: chalmersrevere/opendlv-device-camera-opencv-multi:v0.0.10
         restart: on-failure
         ipc: "host"
@@ -75,6 +78,7 @@ services:
 
     # Encoder for dev-camera-opencv
     video-x264-encoder-amd64:
+        container_name: x264-encoder
         build:
             context: https://github.com/chalmers-revere/opendlv-video-x264-encoder.git
             dockerfile: Dockerfile.amd64
@@ -87,27 +91,15 @@ services:
 
 
     # Turning PointCloudReading into DistanceReading
-    opendlv-perception-echo-proximitysimple:
-        container_name: ultrasound-front
-        build:
-            context: https://github.com/chalmers-revere/opendlv-perception-echo-proximitysimple.git
-            dockerfile: Dockerfile.amd64
-        restart: on-failure
-        network_mode: "host"
-        command: "--cid=111 --a0=0 --a1=15 --z0=0 --z1=1.3 --id=0"
+#    opendlv-perception-echo-proximitysimple:
+#        container_name: ultrasound-front
+#        build:
+#            context: https://github.com/chalmers-revere/opendlv-perception-echo-proximitysimple.git
+#            dockerfile: Dockerfile.amd64
+#        restart: on-failure
+#        network_mode: "host"
+#        command: "--cid=111 --a0=0 --a1=15 --z0=0 --z1=1.3 --id=0"
 
-
-    # Application to run on Snowfox
-    kiwi-application:
-        container_name: kiwi-application
-        build:
-            context: .
-            dockerfile: Dockerfile.amd64
-        restart: always
-        network_mode: "host"
-        ipc: "host"
-        volumes:
-        - /tmp:/tmp
 
 ################################################################################
 #
@@ -116,6 +108,7 @@ services:
 ################################################################################
 
     odsupercomponent:
+        container_name: odsupercomponent
         image: seresearch/opendlv-rhino-on-opendlv-on-opendlv-core-on-opendavinci-on-base:v0.1.5
         restart: on-failure
         network_mode: "host"
