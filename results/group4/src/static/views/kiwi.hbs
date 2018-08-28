@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!-- http://bit.ly/2LSjKqj -->
+<!--
+// Copyright (C) 2018  Ola Benderius, Christian Berger
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>OpenDLV Kiwi View</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/all.css"/>
+
+    <style>
+    .bg {
+        background-image: url("background.jpg");
+        height: 100%; 
+        width: 100vw;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .table-condensed {
+      font-size: 12px;
+    }
+
+    #editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    #container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+    }
+
+{{#if playbackPage}}
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      margin: 5px 0;
+    }
+    input[type=range]:focus {
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      background: #0598db;
+      border-radius: 1.3px;
+      border: 0.2px solid #010101;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      border: 1px solid #000000;
+      height: 18px;
+      width: 16px;
+      border-radius: 6px;
+      background: #ffffff;
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -5.2px;
+    }
+    input[type=range]:focus::-webkit-slider-runnable-track {
+      background: #0598db;
+    }
+    input[type=range]::-moz-range-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      background: #0598db;
+      border-radius: 1.3px;
+      border: 0.2px solid #010101;
+    }
+    input[type=range]::-moz-range-thumb {
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      border: 1px solid #000000;
+      height: 18px;
+      width: 16px;
+      border-radius: 6px;
+      background: #ffffff;
+      cursor: pointer;
+    }
+    input[type=range]::-ms-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+    input[type=range]::-ms-fill-lower {
+      background: #2a6495;
+      border: 0.2px solid #010101;
+      border-radius: 2.6px;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    }
+    input[type=range]::-ms-fill-upper {
+      background: #0598db;
+      border: 0.2px solid #010101;
+      border-radius: 2.6px;
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    }
+    input[type=range]::-ms-thumb {
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      border: 1px solid #000000;
+      height: 18px;
+      width: 16px;
+      border-radius: 6px;
+      background: #ffffff;
+      cursor: pointer;
+      height: 8px;
+    }
+    input[type=range]:focus::-ms-fill-lower {
+      background: #3071a9;
+    }
+    input[type=range]:focus::-ms-fill-upper {
+      background: #367ebd;
+    }
+{{/if}}
+    </style>
+  </head>
+  <body>
+
+<div class="bg">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                    <center>
+                    <i id="connectionStatusSymbol" class="fa fa-taxi" style="font-size:30px;color:#555"></i>
+                    <div id="connectionStatusText">disconnected</div>
+                    </center>
+                </div>
+            </div>
+{{#if livePage}}
+            <div class="row">
+                <div class="col-md-12">
+                    <center>
+                    <button id="record" type="button" class="fa fa-circle" style="font-size:20px;color:#555;padding: 5px 30px;" title="Start recording this live session."></button>
+                    <button id="recordings" type="button" class="far fa-folder-open" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="location.href='recordings'" title="View and handle existing recording files."></button>
+                    </center>
+                </div>
+            </div>
+{{/if}}
+{{#if playbackPage}}
+            <div class="row">
+                <div class="col-md-12">
+                    <center>
+                    <button id="endReplay" type="button" class="fas fa-power-off" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="endReplay(true)" title="End replay and return to live OD4Session."></button>
+                    <button id="recordings" type="button" class="far fa-folder-open" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="endReplay(false)" title="End replay and return to view and handle existing recording files."></button>
+                    </center>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <center>
+                    <button id="replayStartOver" type="button" class="fas fa-undo-alt" style="font-size:20px;color:#555;padding: 5px 17px;" onclick="remotePlayer('replayStartOver')" title="Restart playback from beginning."></button>
+                    <button id="playButton" type="button" class="fas fa-pause" style="font-size:20px;color:#555;padding: 5px 17px;" onclick="remotePlayer('playButton')" title="Play/Pause."></button>
+                    <button id="stepforwardButton" type="button" class="fas fa-step-forward" style="font-size:20px;color:#555;padding: 5px 17px;" onclick="remotePlayer('stepForwardButton')" title="Step forward."></button>
+                    <br>
+                    <input type="range" min="1" max="100" value="1" class="slider" id="playbackrange">
+                    </center>
+                </div>
+            </div>
+{{/if}}
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+    <div class="row" id="center-view">
+        <div class="col-md-12">
+            <div class="tabbable" id="tabs-853231">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active show" href="#panel-feed" data-toggle="tab">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#panel-signals" data-toggle="tab">Messages</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="panel-feed">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <canvas id="videoFrame"></canvas>
+                                <img id="screenshot" style="visibility:hidden" alt="The screen capture will appear in this box.">
+                            </div>
+                            <div class="col-md-4">
+                                <canvas id="sensorView" width="400" height="400"></canvas>
+                            </div>
+                            <div class="col-md-2">
+{{#if livePage}}
+                                <table>
+                                <tr>
+                                <td>
+                                Joystick:
+                                </td>
+                                <td>
+                                <button id="enableSendingJoyStick" type="button" class="fas fa-toggle-off" style="font-size:20px;color:#555;padding: 5px 30px;" title="Send joystick commands to Kiwi." onclick="enableSendingJoystickToggled()"></button>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                Code:
+                                </td>
+                                <td>
+                                <button id="enableSendingCode" type="button" class="fas fa-toggle-off" style="font-size:20px;color:#555;padding: 5px 30px;" title="Send code results to Kiwi." onclick="enableSendingCodeToggled()"></button>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                Platoon:
+                                </td>
+                                <td>
+                                <button id="platooning-button" type="button" class="fas fa-toggle-off" style="font-size:20px;color:#555;padding: 5px 30px;" title="Start platooning."></button>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                Run:
+                                </td>
+                                <td>
+                                <button id="run-button" type="button" class="fas fa-toggle-off" style="font-size:20px;color:#555;padding: 5px 30px;" title="Runs controller."></button>
+                                </td>
+                                </tr>
+                                </table>
+{{/if}}
+
+                                <table>
+                                <tr>
+                                <td>
+                                Steering:
+                                </td>
+                                <td>
+                                <span id="steering"></span>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                Motor:
+                                </td>
+                                <td>
+                                <span id="motor"></span>
+                                </td>
+                                </tr>
+                                </table>
+
+
+                                <div class="table-responsive">
+                                    <div id="containerTimeStamp">-</div>
+                                    <div id="containerTimeStampUnix">-</div>
+                                    <table class="table table-condensed">
+                                      <tbody id="table-messages-overview">
+                                      </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="panel-signals">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <center>
+                                <table class="table table-sm table-hover table-bordered table-responsive">
+                                    <tbody id="table-messages-details" align="left" valign="top">
+                                    </tbody>
+                                </table>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div id="editor">
+<!--                // Access sensor values.
+const frontSensor = perception.front;
+const rearSensor = perception.rear;
+const leftSensor = perception.left;
+const rightSensor = perception.right;
+
+// TODO: Add some logic here.
+
+// Set values to access Kiwi's motor and steering.
+actuation.motor = 0;
+actuation.steering = 0.3;-->
+// centroid, deviation
+
+controlReq(window.centroid, window.deviation,-0.3,0.018,0.002,0.0015,0.01,0)
+
+groundSteering = window.steeringReq;
+pedalPosition = window.PedalPosReq;
+</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/tether.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/Chart.js"></script>
+    <script type="text/javascript" src="js/libcluon-0.0.107.js"></script>
+    <script type="text/javascript" src="js/mini-decoder.js"></script>
+    <script type="text/javascript" src="js/virtualjoystick.js"></script>
+    <script type="text/javascript" src="js/jsfeat-min.js"></script>
+    <script type="text/javascript" src="js/tracking-min.js"></script>
+    <script type="text/javascript" src="js/morph.js"></script>
+
+    <script type="text/javascript" src="js/src-min-noconflict/ace.js" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/eclipse");
+        editor.session.setMode("ace/mode/javascript");
+    </script>
+
+
+{{#if livePage}}
+<script>
+const IS_LIVE_PAGE = true;
+const IS_PLAYBACK_PAGE = false;
+</script>
+{{/if}}
+{{#if playbackPage}}
+<script>
+const IS_LIVE_PAGE = false;
+const IS_PLAYBACK_PAGE = true;
+</script>
+{{/if}}
+{{#if useExternallySuppliedODVDFile}}
+<script>
+const ODVD_FILE = "external.odvd";
+</script>
+{{else}}
+<script>
+const ODVD_FILE = "opendlv-standard-message-set-v0.9.6.odvd";
+</script>
+{{/if}}
+
+    <script type="text/javascript" src="js/kiwi.js"></script>
+  </body>
+</html>
