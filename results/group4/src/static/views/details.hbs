@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link type="text/css" rel="stylesheet" href="css/all.css"/>
+
+        <script type="text/javascript" src="js/jquery-3.2.1.slim.min.js"></script>
+
+        <style>
+            * {
+              box-sizing: border-box;
+            }
+
+            .background-image {
+              background-image: url('background.jpg');
+              background-size: cover;
+              display: block;
+              filter: blur(5px);
+              -webkit-filter: blur(5px);
+              height: 800px;
+              left: 0;
+              position: fixed;
+              right: 0;
+              z-index: 1;
+            }
+
+            .content {
+              background: rgba(255, 255, 255, 0.35);
+              border-radius: 3px;
+              box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+              font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+              top: 10px;
+              left: 0;
+              position: fixed;
+              margin-left: 20px;
+              margin-right: 20px;
+              right: 0;
+              z-index: 2;
+              padding: 0 10px;
+            }
+
+            .divScroll {
+                overflow:scroll;
+                height:600px;
+                width:90%;
+            }
+        </style>
+    </head>
+
+<div class="background-image"></div>
+
+<div class="content">
+
+<div class="divScroll">
+
+<center>
+<p><button id="back" type="button" class="fas fa-arrow-left" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="location.href='/recordings'"></button></p>
+</center>
+
+<center>
+<div onclick="location.href='{{filename}}'" onmouseover="" style="cursor: pointer;"><h4>{{name}}</h4></div>
+
+{{#if hasODVD}}
+<button id="deleteExternallySuppliedODVDFile" type="button" class="far fa-trash-alt" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="deleteExternallySuppliedODVDFile()" title="&nbsp;Remove provided message specification file.">Remove provided message specification file.</button>
+{{/if}}
+</center>
+
+<script>
+function deleteExternallySuppliedODVDFile() {
+    if (confirm("Do you really want to remove previously provided message specification file?")) {
+        fetch('/deleteodvdfile', { method: 'post',
+                                   headers: {
+                                       'Accept': 'application/json, text/plain, */*',
+                                       'Content-Type': 'application/json'
+                                   } }
+        )
+        .then(function(response) {
+            if(response.ok) {
+                location.reload();
+                return;
+            }
+            throw new Error('Request failed.');
+            })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+}
+</script>
+
+<center>
+<table cellpadding="2" width="80%">
+    <tr>
+{{#each attributes}}
+    <tr>
+        <td align="left">
+{{#if selectable}}
+<input type="checkbox" id="isSelected-{{key}}" name="isSelected-{{key}}" value="{{messageID}}/{{senderStamp}}" title="Include this message in export."/>
+{{/if}}
+{{#if messageID}}
+        number of '{{key}}' (message ID = {{messageID}}, sender stamp = {{senderStamp}}):
+{{else}}
+        {{key}}
+{{/if}}
+        </td>
+        <td align="right">
+        {{value}}
+        </td>
+    </tr>
+{{/each}}
+</table>
+</center>
+
+<br>
+
+<center>
+<button id="exportSelectedMessages" type="button" class="far fa-check-square" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="exportSelectedMessages()" title="Export the selected messages into a new .rec file.">&nbsp;Export the selected messages into a new .rec file.</button>
+</center>
+
+<script>
+var keepString = "";
+function exportSelectedMessages() {
+    $("input:checkbox").each(function() {
+        if ($(this).is(":checked")) {
+            if (0 == keepString.length) {
+                keepString = "--keep=" + $(this).val();
+            }
+            else {
+                keepString += "," + $(this).val();
+            }
+        }
+    });
+    if (0 != keepString.length) {
+        if (confirm("Do you really want to export the selected messages into a new .rec file?")) {
+            document.body.style.cursor = 'wait';
+            fetch('/exportselectedmessages', { method: 'post',
+                                               headers: {
+                                                   'Accept': 'application/json, text/plain, */*',
+                                                   'Content-Type': 'application/json'
+                                               },
+                                               body: JSON.stringify({keepString: keepString,
+                                                                     recordingFile: "{{filename}}"})
+                                             }
+            )
+            .then(function(response) {
+                if(response.ok) {
+                    var f = "{{filename}}";
+                    alert('Messages exported into ' + f.substr(0, f.lastIndexOf('.rec')) + '-selection.rec. You can find the file in the folder view.');
+                    document.body.style.cursor = 'default';
+                    return;
+                }
+                document.body.style.cursor = 'default';
+                throw new Error('Request failed.');
+                })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+    }
+    keepString = "";
+}
+</script>
+
+</div>
+
+</body>
+</html>
+

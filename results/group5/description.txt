@@ -1,0 +1,6 @@
+## Group members
+>>Write name of group member 1<<
+>>Write name of group member 2<<
+
+# Brief description
+>>Write really brief description of the project, 5 sentences tops<<

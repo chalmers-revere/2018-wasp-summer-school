@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link type="text/css" rel="stylesheet" href="css/all.css"/>
+
+        <style>
+            * {
+              box-sizing: border-box;
+            }
+
+            .background-image {
+              background-image: url('background.jpg');
+              background-size: cover;
+              display: block;
+              filter: blur(5px);
+              -webkit-filter: blur(5px);
+              height: 800px;
+              left: 0;
+              position: fixed;
+              right: 0;
+              z-index: 1;
+            }
+
+            .content {
+              background: rgba(255, 255, 255, 0.35);
+              border-radius: 3px;
+              box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+              font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+              top: 10px;
+              left: 0;
+              position: fixed;
+              margin-left: 20px;
+              margin-right: 20px;
+              right: 0;
+              z-index: 2;
+              padding: 0 10px;
+            }
+
+            .divScroll {
+                overflow:scroll;
+                height:600px;
+                width:90%;
+            }
+
+            #drop_zone {
+              border: 2px dashed darkgray;
+              width:  400px;
+              height: 90px;
+            }
+
+            .slidingMessageViewFromTop {
+                position: fixed;
+                top: 15%;
+                left: 20%;
+                width: 700px;
+                height: 500px;
+                overflow: scroll;
+                background-color: #FFF; color: #000;
+                transition: all 1s;
+                z-index: 10;
+                font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+                font-size: 13px;
+            }
+            .slidingMessageViewFromTop.close {
+                height: 0;
+            }
+        </style>
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/libcluon-0.0.107.js"></script>
+    </head>
+
+{{#if isX64}}
+<div class="slidingMessageViewFromTop close">
+    <table>
+This functionality is processing the given .rec file to convert the contained messages into corresponding .csv files and decodes any contained video data (h264, VP8, or VP9) into .png files.<br>
+<br>
+Video processing for h264-encoded frames is realized using the "OpenH264 Video Codec provided by Cisco Systems, Inc.". The usage of this codec is subject to the license conditions as shown below.<br>
+<br>
+-------------------------------------------------------<br>
+About The Cisco-Provided Binary of OpenH264 Video Codec<br>
+-------------------------------------------------------<br>
+<br>
+Cisco provides this program under the terms of the BSD license.  <br>
+<br><br>
+Additionally, this binary is licensed under Cisco’s AVC/H.264 Patent Portfolio License from MPEG LA, at no cost to you, provided that the requirements and conditions shown below in the AVC/H.264 Patent Portfolio sections are met.  <br>
+<br>
+As with all AVC/H.264 codecs, you may also obtain your own patent license from MPEG LA or from the individual patent owners, or proceed at your own risk.  Your rights from Cisco under the BSD license are not affected by this choice.  <br>
+<br>
+For more information on the OpenH264 binary licensing, please see the OpenH264 FAQ found at http://www.openh264.org/faq.html#binary <br>
+<br>
+A corresponding source code to this binary program is available under the same BSD terms, which can be found at http://www.openh264.org<br>
+<br>
+-----------<br>
+BSD License<br>
+-----------<br>
+<br>
+Copyright © 2014 Cisco Systems, Inc.<br>
+<br>
+All rights reserved.<br>
+<br>
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:<br>
+<br>
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.<br>
+<br>
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.<br>
+<br>
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+<br>
+-----------------------------------------<br>
+AVC/H.264 Patent Portfolio License Notice<br>
+-----------------------------------------<br>
+<br>
+The binary form of this Software is distributed by Cisco under the AVC/H.264 Patent Portfolio License from MPEG LA, and is subject to the following requirements, which may or may not be applicable to your use of this software: <br>
+<br>
+THIS PRODUCT IS LICENSED UNDER THE AVC PATENT PORTFOLIO LICENSE FOR THE PERSONAL USE OF A CONSUMER OR OTHER USES IN WHICH IT DOES NOT RECEIVE REMUNERATION TO (i) ENCODE VIDEO IN COMPLIANCE WITH THE AVC STANDARD (“AVC VIDEO”) AND/OR (ii) DECODE AVC VIDEO THAT WAS ENCODED BY A CONSUMER ENGAGED IN A PERSONAL ACTIVITY AND/OR WAS OBTAINED FROM A VIDEO PROVIDER LICENSED TO PROVIDE AVC VIDEO.  NO LICENSE IS GRANTED OR SHALL BE IMPLIED FOR ANY OTHER USE.  ADDITIONAL INFORMATION MAY BE OBTAINED FROM MPEG LA, L.L.C. SEE HTTP://WWW.MPEGLA.COM<br>
+<br>
+Accordingly, please be advised that content providers and broadcasters using AVC/H.264 in their service may be required to obtain a separate use license from MPEG LA, referred to as "(b) sublicenses" in the SUMMARY OF AVC/H.264 LICENSE TERMS from MPEG LA found at http://www.openh264.org/mpegla<br>
+<br>
+---------------------------------------------<br>
+AVC/H.264 Patent Portfolio License Conditions<br>
+---------------------------------------------<br>
+<br>
+In addition, the Cisco-provided binary of this Software is licensed under Cisco's license from MPEG LA only if the following conditions are met:<br>
+<br>
+1. The Cisco-provided binary is separately downloaded to an end user’s device, and not integrated into or combined with third party software prior to being downloaded to the end user’s device;<br>
+<br>
+2. The end user must have the ability to control (e.g., to enable, disable, or re-enable) the use of the Cisco-provided binary;<br>
+<br>
+3. Third party software, in the location where end users can control the use of the Cisco-provided binary, must display the following text:<br>
+<br>
+       "OpenH264 Video Codec provided by Cisco Systems, Inc."<br>
+<br>
+4.  Any third-party software that makes use of the Cisco-provided binary must reproduce all of the above text, as well as this last condition, in the EULA and/or in another location where licensing information is to be presented to the end user.  <br>
+ <br>
+<br>
+<br>
+                          v1.0<br>
+</table>
+<center>
+<button id="openh264-okay" type="button" class="fas fa-check" style="font-size:20px;color:#3498DB;padding: 5px 30px;" onclick="acceptopenh264License()">&nbsp;accept</button>
+<button id="openh264-cancel" type="button" class="fas fa-ban" style="font-size:20px;color:#3498DB;padding: 5px 30px;" onclick="toggleMessageViewFromTop()">&nbsp;cancel</button>
+</center>
+</div>
+<script>
+function toggleMessageViewFromTop() {
+    $('.slidingMessageViewFromTop').toggleClass('close');
+}
+</script>
+{{/if}}
+
+<div class="background-image"></div>
+
+<div class="content">
+
+<div class="divScroll">
+
+<center>
+<p><button id="back" type="button" class="fas fa-arrow-left" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="location.href='..'"></button></p>
+</center>
+
+<center>
+<div id="drop_zone">
+    <p>Optional: Drag and drop a message specification file (.odvd) here to be used instead of the OpenDLV Standard Message Set when creating the .csv export.</p>
+</div>
+{{#if hasODVD}}
+<button id="deleteExternallySuppliedODVDFile" type="button" class="far fa-trash-alt" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="deleteExternallySuppliedODVDFile()" title="&nbsp;Remove provided message specification file.">Remove provided message specification file.</button>
+{{/if}}
+</center>
+
+<script>
+    function handleDragOver(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy';
+    }
+
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        var files = evt.dataTransfer.files; // FileList object.
+
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        if (1 != files.length) {
+            alert("Cannot handle more than one message specification file (.odvd).");
+        }
+        else if (1024*1024 < files[0].size) {
+            alert("Cannot handle message specification files (.odvd) that are larger than 1MB.");
+        }
+        else {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var content = reader.result;
+                var __libcluon = libcluon();
+                var res = "0";
+                try {
+                    // Always add the messages to control the player.
+                    var playerMessages = `
+
+message cluon.data.PlayerCommand [id = 9] {
+    uint8 command [id = 1]; // 0 = nothing, 1 = play, 2 = pause, 3 = seekTo, 4 = step
+    float seekTo [id = 2];
+}
+
+message cluon.data.PlayerStatus [id = 10] {
+    uint8 state [id = 1]; // 0 = unknown, 1 = loading file, 2 = playback
+    uint32 numberOfEntries [id = 2];
+    uint32 currentEntryForPlayback [id = 3];
+}
+`;
+                    content += playerMessages;
+                    res = __libcluon.setMessageSpecification(content);
+                }
+                catch (e) {
+                    res = "0";
+                }
+
+                if ("0" != res) {
+                    if (confirm("Do you want to upload the provided message specification file?")) {
+                        fetch('/provideodvdfile', { method: 'post',
+                                            headers: {
+                                                'Accept': 'application/json, text/plain, */*',
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({odvd: content})
+                                           }
+                        )
+                        .then(function(response) {
+                            if (response.ok) {
+                                location.reload();
+                                return;
+                            }
+                            throw new Error('Request failed.');
+                            })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    }
+                }
+                else {
+                    alert("Provided message specification file contained " + res + " messages.");
+                }
+            }
+
+            reader.readAsText(files[0]);
+        }
+    }
+
+    // Connect drag-and-drop listeners.
+    var dropZone = document.getElementById('drop_zone');
+    dropZone.addEventListener('dragover', handleDragOver, false);
+    dropZone.addEventListener('drop', handleFileSelect, false);
+
+function deleteExternallySuppliedODVDFile() {
+    if (confirm("Do you really want to remove previously provided message specification file?")) {
+        fetch('/deleteodvdfile', { method: 'post',
+                                   headers: {
+                                       'Accept': 'application/json, text/plain, */*',
+                                       'Content-Type': 'application/json'
+                                   } }
+        )
+        .then(function(response) {
+            if(response.ok) {
+                location.reload();
+                return;
+            }
+            throw new Error('Request failed.');
+            })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+}
+</script>
+
+<table cellpadding="2" width="100%" id="listOfRecordings">
+    <tr>
+        <th>
+        Actions
+        </th>
+        <th onclick="sortTable(1)" style="cursor: pointer;">
+        Name
+        </th>
+        <th>
+        Size
+        </th>
+    </tr>
+{{#each recfiles}}
+    <tr>
+        <td align="center">
+        <button id="download-rec" type="button" class="fas fa-file-download" style="font-size:20px;color:#3498DB;padding: 5px 30px;" onclick="location.href='{{filename}}'" title="Download {{name}}.">&nbsp;.rec</button>
+        <button id="download-csv-{{name}}" type="button" class="fas fa-file-archive" style="font-size:20px;color:#3498DB;padding: 5px 30px;" onclick="convertFile('{{filename}}', '{{name}}')" title="Convert {{name}} to separate .csv files using the OpenDLV Standard Message Set and download resulting .csv files as zip file.">&nbsp;.csv</button>
+{{#if ../isX64}}
+        <button id="download-csvpng-{{name}}" type="button" class="fas fa-file-archive" style="font-size:20px;color:#3498DB;padding: 5px 30px;" onclick="convertFilePNG('{{filename}}', '{{name}}')" title="Convert {{name}} to separate .csv and .png files using the OpenDLV Standard Message Set and download resulting .csv and .png files as zip file.">&nbsp;.csv/.png</button>
+{{else}}
+        <button id="download-csvpng-{{name}}" type="button" class="fas fa-file-archive" style="font-size:20px;color:#555;padding: 5px 30px;disabled" title="Converting {{name}} to separate .csv and .png files using the OpenDLV Standard Message Set and download resulting .csv and .png files as zip file not supported on non-x86_64 platforms.">&nbsp;<strike>.csv/.png</strike></button>
+{{/if}}
+        <button id="playFile" type="button" class="far fa-play-circle" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="replayFile('{{filename}}', '{{name}}')" title="Replay {{name}}."></button>
+        <button id="deleteFile" type="button" class="far fa-trash-alt" style="font-size:20px;color:#555;padding: 5px 30px;" onclick="deleteFile('{{filename}}', '{{name}}')" title="Delete {{name}}."></button>
+        </td>
+        <td align="left">
+        <div onclick="location.href = '../details?rec={{name}}'" onmouseover="" style="cursor: pointer;">{{name}}</div>
+        </td>
+        <td align="right">
+        {{size}} bytes
+        </td>
+    </tr>
+{{/each}}
+</table>
+</div>
+
+<script>
+// Sorting table code: https://www.w3schools.com/howto/howto_js_sort_table.asp
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("listOfRecordings");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc"; 
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++; 
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+function convertFile(filename, name) {
+    document.getElementById('download-csv-' + name).disabled = true;
+    document.getElementById('download-csv-' + name).style.color = "#555";
+    document.body.style.cursor = 'wait';
+
+    fetch('/convertrec2csv', { method: 'post',
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({recordingFileToConvert: filename, recordingFile: name })
+                       }
+    )
+    .then(function(response) {
+        if (response.ok) {
+            window.location = "../" + name + ".csv.zip";
+            document.getElementById('download-csv-' + name).disabled = false;
+            document.getElementById('download-csv-' + name).style.color = "#3498DB";
+            document.body.style.cursor = 'default';
+            return;
+        }
+        document.body.style.cursor = 'default';
+
+        alert("Failed to export .csv files (maybe the message specification file was incomplete?).");
+        throw new Error('Request failed.');
+        })
+    .catch(function(error) {
+        console.log(error);
+    });
+}
+
+{{#if isX64}}
+var filename_convertFilePNG = "";
+var name_convertFilePNG = "";
+function convertFilePNG(filename, name) {
+    filename_convertFilePNG = filename;
+    name_convertFilePNG = name;
+
+    if (document.cookie.replace(/(?:(?:^|.*;\s*)hasShownLicenseForopenh264\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+        toggleMessageViewFromTop();
+    }
+    else {
+        convertFilePNGInternal(filename_convertFilePNG, name_convertFilePNG);
+    }
+}
+
+function acceptopenh264License() {
+    toggleMessageViewFromTop();
+    document.cookie = "hasShownLicenseForopenh264=true";
+
+    convertFilePNGInternal(filename_convertFilePNG, name_convertFilePNG);
+}
+
+function convertFilePNGInternal(filename, name) {
+    if (confirm("Converting a .rec file into .csv/.png files can take several minutes. Do you want to continue?")) {
+        document.getElementById('download-csvpng-' + name).disabled = true;
+        document.getElementById('download-csvpng-' + name).style.color = "#555";
+        document.body.style.cursor = 'wait';
+
+        fetch('/convertrec2csvpng', { method: 'post',
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({recordingFileToConvert: filename, recordingFile: name })
+                           }
+        )
+        .then(function(response) {
+            if (response.ok) {
+                window.location = "../" + name + ".csv.zip";
+                document.getElementById('download-csvpng-' + name).disabled = false;
+                document.getElementById('download-csvpng-' + name).style.color = "#3498DB";
+                document.body.style.cursor = 'default';
+                return;
+            }
+            document.body.style.cursor = 'default';
+
+            alert("Failed to export .csv/.png files (maybe the message specification file was incomplete?).");
+            throw new Error('Request failed.');
+            })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+}
+{{/if}}
+
+function replayFile(filename, name) {
+    fetch('/replayrecfile', { method: 'post',
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({recordingFileToPlay: filename})
+                       }
+    )
+    .then(function(response) {
+        if(response.ok) {
+            window.location = "../playback";
+            return;
+        }
+        throw new Error('Request failed.');
+        })
+    .catch(function(error) {
+        console.log(error);
+    });
+}
+
+function deleteFile(filename, name) {
+    if (confirm("Do you really want to delete '" + name + "'?")) {
+        fetch('/deleterecfile', { method: 'post',
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({recordingFileToDelete: filename})
+                           }
+        )
+        .then(function(response) {
+            if(response.ok) {
+                location.reload();
+                return;
+            }
+            throw new Error('Request failed.');
+            })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+}
+</script>
+
+</div>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+
+//
+// THIS IS AN AUTO-GENERATED FILE. DO NOT MODIFY AS CHANGES MIGHT BE OVERWRITTEN!
+//
+
+
+// This line is only needed when using Google Protobuf 3.
+syntax = "proto2";
+
+
+// Message identifier: 12.
+message cluon_data_TimeStamp {
+    
+    optional sint32 seconds = 1;
+    
+    optional sint32 microseconds = 2;
+    
+}
+
+
+//
+// THIS IS AN AUTO-GENERATED FILE. DO NOT MODIFY AS CHANGES MIGHT BE OVERWRITTEN!
+//
+
+
+
+// Message identifier: 1.
+message cluon_data_Envelope {
+    
+    optional sint32 dataType = 1;
+    
+    optional bytes serializedData = 2;
+    
+    optional cluon_data_TimeStamp sent = 3;
+    
+    optional cluon_data_TimeStamp received = 4;
+    
+    optional cluon_data_TimeStamp sampleTimeStamp = 5;
+    
+    optional uint32 senderStamp = 6;
+    
+}
+
+
+//
+// THIS IS AN AUTO-GENERATED FILE. DO NOT MODIFY AS CHANGES MIGHT BE OVERWRITTEN!
+//
+
+
+
+// Message identifier: 9.
+message cluon_data_PlayerCommand {
+    
+    optional uint32 command = 1;
+    
+    optional float seekTo = 2;
+    
+}
+
+
+//
+// THIS IS AN AUTO-GENERATED FILE. DO NOT MODIFY AS CHANGES MIGHT BE OVERWRITTEN!
+//
+
+
+
+// Message identifier: 10.
+message cluon_data_PlayerStatus {
+    
+    optional uint32 state = 1;
+    
+    optional uint32 numberOfEntries = 2;
+    
+    optional uint32 currentEntryForPlayback = 3;
+    
+}
+
