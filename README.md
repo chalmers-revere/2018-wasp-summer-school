@@ -1,5 +1,3 @@
-Moved to https://git.opendlv.org.
-
 ## Welcome to the 2018 WASP Summer School at Chalmers and Revere
 
 This repository contains supplementary material for the 2018 WASP Summer School.
